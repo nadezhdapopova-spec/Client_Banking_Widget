@@ -1,5 +1,5 @@
 from src.masks import get_mask_account, get_mask_card_number
-from src.widget import mask_account_card
+from src.widget import get_date, mask_account_card
 
 
 def main_1() -> None:
@@ -31,3 +31,12 @@ def main_2() -> None:
 
 
 main_2()
+
+
+def main_3() -> None:
+    """Вывод даты в формате 'ДД.ММ.ГГГГ'"""
+    date = "2024-03-11T02:26:18.671407"
+    print(get_date(date))
+
+
+main_3()

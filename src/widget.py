@@ -8,18 +8,24 @@ def mask_account_card(card_or_account: str) -> str:
     """
     if not card_or_account.replace(" ", "").isalnum():
         raise ValueError("Обнаружены некорректные символы")
+
+    number = ""
+    title = ""
+
+    for symbol in card_or_account:
+        if symbol.isdigit():
+            number += symbol
+        else:
+            title += symbol
+
     if "Счет" in card_or_account:
-        account_number = ""
-        for symbol in card_or_account:
-            if symbol.isdigit():
-                account_number += symbol
-        return f"Счет {get_mask_account(int(account_number))}"
+        return f"{title}{get_mask_account(int(number))}"
     else:
-        card_number = ""
-        card_name = ""
-        for symbol in card_or_account:
-            if symbol.isdigit():
-                card_number += symbol
-            else:
-                card_name += symbol
-        return f"{card_name}{get_mask_card_number(int(card_number))}"
+        return f"{title}{get_mask_card_number(int(number))}"
+
+
+def get_date(date: str) -> str:
+    """
+    Функция для преобразования даты в формат 'ДД.ММ.ГГГГ'
+    """
+    return f"{date[8:10]}.{date[5:7]}.{date[:4]}"
