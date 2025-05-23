@@ -30,4 +30,10 @@ def get_date(date: str) -> str:
     """
     Функция для преобразования даты в формат 'ДД.ММ.ГГГГ'
     """
+
+    date_numbers = date[8:10] + date[5:7] + date[:4]
+
+    if not date_numbers.isdigit() or len(date) < 11:
+        raise ValueError("Некорректная дата.")
+
     return f"{date[8:10]}.{date[5:7]}.{date[:4]}"

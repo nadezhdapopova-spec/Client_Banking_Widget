@@ -66,3 +66,33 @@ def test_mask_account_card_invalid_symbols(card_or_account: str) -> None:
     with pytest.raises(ValueError) as exc_info:
         mask_account_card(card_or_account)
     assert str(exc_info.value) == "Обнаружены некорректные символы."
+
+
+@pytest.mark.parametrize("date, expected", [
+    ("2024-03-11T02:26:18.671407", "11.03.2024"),
+    ("2025-05-25T02:26:18.671407", "25.05.2025"),
+    ("1900-01-01T02:26:18.671407", "01.01.1900"),
+    ("2022-01-01T02:26:18.671407", "01.01.2022"),
+    ("2023-12-31T02:26:18.671407", "31.12.2023"),
+    ("2000-02-29T02:26:18.671407", "29.02.2000"),
+    ("2024/03/11T02:26:18.671407", "11.03.2024"),
+    ("2024.03.11T02:26:18.671407", "11.03.2024"),
+])
+def test_get_date_success(date: str, expected: str) -> None:
+    assert get_date(date) == expected
+
+
+@pytest.mark.parametrize("date", [
+    (""),
+    (" "),
+    ("1999"),
+    ("2022-01"),
+    ("2023-12-3"),
+    ("20-05-25T02:26:18.671407"),
+    ("-----05-25T02:26:18.671407"),
+    ("----------T02:26:18.671407")
+])
+def test_get_date_invalid(date: str) -> None:
+    with pytest.raises(ValueError) as exc_info:
+        get_date(date)
+    assert str(exc_info.value) == "Некорректная дата."
