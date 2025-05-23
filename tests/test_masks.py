@@ -22,12 +22,13 @@ def test_get_mask_account_success(account_number, expected):
     (305),
     (12),
     (9),
-    ()
+    (),
+    (" ")
 ])
 def test_get_mask_account_unacceptable_length(account_number):
     with pytest.raises(ValueError) as exc_info:
         get_mask_account(account_number)
-        assert str(exc_info.value) == "Номер счёта должен содержать не менее 4 цифр."
+    assert str(exc_info.value) == "Номер счёта должен содержать не менее 4 цифр."
 
 
 @pytest.mark.parametrize("account_number", [
@@ -39,7 +40,6 @@ def test_get_mask_account_unacceptable_length(account_number):
     ("☺4301"),
     ("#73654108430135874305"),
     ("654108430135875112@"),
-    (" "),
     ("301358 71711"),
     (" 5874215 "),
     (" 5874215"),
@@ -50,7 +50,7 @@ def test_get_mask_account_unacceptable_length(account_number):
 def test_get_mask_account_unacceptable_symbols(account_number):
     with pytest.raises(ValueError) as exc_info:
         get_mask_account(account_number)
-        assert str(exc_info.value) == "Номер счета должен содержать только цифры."
+    assert str(exc_info.value) == "Номер счета должен содержать только цифры."
 
 
 @pytest.mark.parametrize("card_number, expected", [
@@ -83,32 +83,32 @@ def test_get_mask_card_number_success(card_number, expected):
     (797),
     (79),
     (7),
-    ()
+    (),
+    (" "),
 ])
 def test_get_mask_card_number_unacceptable_length(card_number):
     with pytest.raises(ValueError) as exc_info:
         get_mask_card_number(card_number)
-        assert str(exc_info.value) == "Номер карты должен содержать 16 цифр."
+    assert str(exc_info.value) == "Номер карты должен содержать 16 цифр."
 
 
 @pytest.mark.parametrize("card_number", [
-    (-7000792289606361),
-    (700079228960.6361),
-    (---7000792289606361),
-    ("Ivan7000792289606361"),
-    ("Иван7000792289606361"),
-    ("☺7000792289606361"),
-    ("#7000792289606361"),
-    ("7000792289606361@"),
-    (" "),
-    ("7000 7922 896063 61"),
-    (" 7000792289606361 "),
-    (" 7000792289606361"),
-    ("7000792289606361 "),
-    ("_70007922_89606361_"),
-    ("/7000792289606361")
+    ("-700079226896063"),
+    (70007228960.6361),
+    ("---7000792820683"),
+    ("Ivan700076063611"),
+    ("Иван700896016361"),
+    ("☺700079221406361"),
+    ("#700079228606361"),
+    ("700079228606361@"),
+    ("7000 7922 803 61"),
+    (" 70007228960661 "),
+    (" 700792289603651"),
+    ("700092228960361 "),
+    ("_700722_8960661_"),
+    ("/700079228606361")
 ])
 def test_get_mask_card_number_unacceptable_symbols(card_number):
     with pytest.raises(ValueError) as exc_info:
         get_mask_card_number(card_number)
-        assert str(exc_info.value) == "Номер карты должен содержать только цифры."
+    assert str(exc_info.value) == "Номер карты должен содержать только цифры."
