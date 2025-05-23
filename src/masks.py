@@ -1,4 +1,4 @@
-def get_mask_card_number(card_number: int) -> str:
+def get_mask_card_number(card_number: int | str) -> str:
     """
     Функция для получения маски номера банковской карты
     в формате XXXX XX** **** XXXX
@@ -13,7 +13,7 @@ def get_mask_card_number(card_number: int) -> str:
     return f"{card_symbols[:4]} {card_symbols[4:6]}** **** {card_symbols[-4:]}"
 
 
-def get_mask_account(account_number: int) -> str:
+def get_mask_account(account_number: int | str) -> str:
     """
     Функция для получения маски номера банковского счёта в формате **XXXX
     """
@@ -21,6 +21,7 @@ def get_mask_account(account_number: int) -> str:
 
     if len(account_symbols) < 4:
         raise ValueError("Номер счёта должен содержать не менее 4 цифр.")
+
     if not account_symbols.isdigit():
         raise ValueError("Номер счета должен содержать только цифры.")
 
