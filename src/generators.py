@@ -4,8 +4,8 @@ from mypyc.crash import Iterator
 def filter_by_currency(transactions: list[dict], target_currency: str) -> Iterator:
     """Фильтрует транзакции по заданной валюте"""
 
-    filtered_transactions = (desc for desc in transactions if
-                             desc["operationAmount"]["currency"]["name"] == target_currency)
+    filtered_transactions = (transact for transact in transactions if
+                             transact["operationAmount"]["currency"]["name"] == target_currency)
 
     return filtered_transactions
 
@@ -13,7 +13,7 @@ def filter_by_currency(transactions: list[dict], target_currency: str) -> Iterat
 def transaction_descriptions(transactions: list[dict]) -> Iterator:
     """Возвращает описание каждой операции транзакции по очереди"""
 
-    descriptions = (desc["description"] for desc in transactions)
+    descriptions = (transact["description"] for transact in transactions)
 
     for desc in descriptions:
         yield desc
