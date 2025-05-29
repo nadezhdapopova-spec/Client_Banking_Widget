@@ -19,5 +19,19 @@ def transaction_descriptions(transactions: list[dict]) -> Iterator:
         yield desc
 
 
-# def card_number_generator():
-#
+def card_number_generator(start: int, stop: int) -> Iterator:
+    """Генерирует и возвращает номера банковских карт в заданном диапазоне номеров"""
+
+    if start <= 0 or start > 9999999999999999:
+        raise ValueError("Заданы невалидные значения")
+
+    if stop <= 0 or stop > 9999999999999999:
+        raise ValueError("Заданы невалидные значения")
+
+    if start > stop:
+        raise ValueError("Заданы невалидные значения")
+
+    card_numbers = (str(num).zfill(16) for num in range(start, stop + 1))
+
+    for card_num in card_numbers:
+        yield card_num

@@ -1,4 +1,4 @@
-from src.generators import filter_by_currency, transaction_descriptions
+from src.generators import filter_by_currency, transaction_descriptions, card_number_generator
 from src.masks import get_mask_account, get_mask_card_number
 from src.processing import filter_by_state, sort_by_date
 from src.widget import get_date, mask_account_card
@@ -257,3 +257,20 @@ def main_7() -> None:
 
 
 main_7()
+
+
+def main_8():
+    start = 1
+    stop = 4
+
+    try:
+        card_numbers = card_number_generator(start, stop)
+
+        for _ in range(5):
+            print(next(card_numbers, "End"))
+
+    except ValueError as e:
+        print(f"Error: {e}")
+
+
+main_8()
