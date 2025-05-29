@@ -6,5 +6,5 @@ def filter_by_currency(transactions: list[dict], target_currency: str) -> Iterat
 
     filtered_transactions = (cur for cur in transactions if
                              cur["operationAmount"]["currency"]["name"] == target_currency)
-    for transaction in filtered_transactions:
-        yield transaction
+
+    return filtered_transactions
