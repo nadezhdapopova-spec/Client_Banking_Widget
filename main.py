@@ -1,9 +1,7 @@
-from locale import currency
-
+from src.generators import filter_by_currency
 from src.masks import get_mask_account, get_mask_card_number
 from src.processing import filter_by_state, sort_by_date
 from src.widget import get_date, mask_account_card
-from src.generators import filter_by_currency
 
 
 def main_1() -> None:
@@ -83,9 +81,8 @@ def main_6() -> None:
     """Вывод списка транзакций с заданной валютой"""
 
     target_currency = "USD"
-    #target_currency = "руб."
-    transactions = (
-    [
+    # target_currency = "руб."
+    transactions = ([
         {
             "id": 939719570,
             "state": "EXECUTED",
@@ -161,8 +158,7 @@ def main_6() -> None:
             "from": "Visa Platinum 1246377376343588",
             "to": "Счет 14211924144426031657"
         }
-    ]
-)
+    ])
 
     target_transactions = filter_by_currency(transactions, target_currency)
 

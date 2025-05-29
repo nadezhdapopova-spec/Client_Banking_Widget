@@ -1,5 +1,6 @@
 from mypyc.crash import Iterator
 
+
 def filter_by_currency(transactions: list[dict], target_currency: str) -> Iterator:
     """Фильтрация транзакций по заданной валюте"""
 
