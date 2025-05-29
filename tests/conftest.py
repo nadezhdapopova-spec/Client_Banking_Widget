@@ -199,3 +199,12 @@ def filtered_transactions_rub() -> list[dict]:
             "to": "Счет 14211924144426031657"
         }
     ])
+
+
+@pytest.fixture
+def transact_descriptions() -> list[str]:
+    return ["Перевод организации",
+            "Перевод со счета на счет",
+            "Перевод со счета на счет",
+            "Перевод с карты на карту",
+            "Перевод организации"]
