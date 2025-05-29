@@ -163,10 +163,8 @@ def main_6() -> None:
 
     target_transactions = filter_by_currency(transactions, target_currency)
 
-    print(next(target_transactions, "End"))
-    # print(next(target_transactions, "End"))
-    # print(next(target_transactions, "End"))
-    # print(next(target_transactions, "End"))
+    for _ in range(4):
+        print(next(target_transactions, "End"))
 
 
 main_6()
@@ -254,12 +252,8 @@ def main_7() -> None:
 
     descriptions = transaction_descriptions(transactions)
 
-    print(next(descriptions, "End"))
-    # print(next(descriptions, "End"))
-    # print(next(descriptions, "End"))
-    # print(next(descriptions, "End"))
-    # print(next(descriptions, "End"))
-    # print(next(descriptions, "End"))
+    for _ in range(6):
+        print(next(descriptions, "End"))
 
 
 main_7()

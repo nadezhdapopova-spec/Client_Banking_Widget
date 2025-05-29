@@ -17,3 +17,7 @@ def transaction_descriptions(transactions: list[dict]) -> Iterator:
 
     for desc in descriptions:
         yield desc
+
+
+# def card_number_generator():
+#
