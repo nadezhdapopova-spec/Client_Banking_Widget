@@ -25,7 +25,7 @@ def card_number_generator(start: int, stop: int) -> Iterator:
     if start <= 0 or start > 9999999999999999:
         raise ValueError("Заданы невалидные значения")
 
-    if stop <= 0 or stop > 9999999999999999:
+    if stop > 9999999999999999:
         raise ValueError("Заданы невалидные значения")
 
     if start > stop:
