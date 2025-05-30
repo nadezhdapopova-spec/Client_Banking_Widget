@@ -1,6 +1,6 @@
 import pytest
 
-from src.generators import filter_by_currency, transaction_descriptions, card_number_generator
+from src.generators import card_number_generator, filter_by_currency, transaction_descriptions
 
 
 def test_filter_by_currency_usd(transactions: list[dict],
@@ -51,7 +51,7 @@ def test_transaction_descriptions(transactions: list[dict],
 
 
 def test_transaction_descriptions_usd(filtered_transactions_usd: list[dict],
-                                  transact_descriptions: list[str]) -> None:
+                                      transact_descriptions: list[str]) -> None:
     generator = transaction_descriptions(filtered_transactions_usd)
     assert next(generator, "End") == transact_descriptions[0]
     assert next(generator, "End") == transact_descriptions[1]
