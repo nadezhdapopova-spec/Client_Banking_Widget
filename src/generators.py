@@ -34,4 +34,4 @@ def card_number_generator(start: int, stop: int) -> Iterator:
     card_numbers = (str(num).zfill(16) for num in range(start, stop + 1))
 
     for card_num in card_numbers:
-        yield card_num
+        yield f"{card_num[:4]} {card_num[4:8]} {card_num[8:12]} {card_num[12:]}"
