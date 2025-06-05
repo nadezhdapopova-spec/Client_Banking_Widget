@@ -1,6 +1,12 @@
+import os
+
+from config import ROOT_DIR
+from src.decorators import log
 from src.masks import get_mask_account, get_mask_card_number
 
 
+# @log()
+@log(filename=os.path.join(ROOT_DIR, r"data/mylog.txt"))
 def mask_account_card(card_or_account: str) -> str:
     """
     Функция для получения маски номера банковского счёта в формате **XXXX
@@ -26,6 +32,8 @@ def mask_account_card(card_or_account: str) -> str:
         return f"{title}{get_mask_card_number(int(number))}"
 
 
+# @log()
+@log(filename=os.path.join(ROOT_DIR, r"data/mylog.txt"))
 def get_date(date: str) -> str:
     """
     Функция для преобразования даты в формат 'ДД.ММ.ГГГГ'

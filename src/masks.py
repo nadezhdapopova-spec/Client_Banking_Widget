@@ -1,3 +1,11 @@
+import os
+
+from config import ROOT_DIR
+from src.decorators import log
+
+
+# @log()
+@log(filename=os.path.join(ROOT_DIR, r"data/mylog.txt"))
 def get_mask_card_number(card_number: int | str) -> str:
     """
     Функция для получения маски номера банковской карты
@@ -12,7 +20,8 @@ def get_mask_card_number(card_number: int | str) -> str:
 
     return f"{card_symbols[:4]} {card_symbols[4:6]}** **** {card_symbols[-4:]}"
 
-
+# @log()
+@log(filename=os.path.join(ROOT_DIR, r"data/mylog.txt"))
 def get_mask_account(account_number: int | str) -> str:
     """
     Функция для получения маски номера банковского счёта в формате **XXXX
