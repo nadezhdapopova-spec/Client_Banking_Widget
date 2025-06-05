@@ -20,6 +20,7 @@ def get_mask_card_number(card_number: int | str) -> str:
 
     return f"{card_symbols[:4]} {card_symbols[4:6]}** **** {card_symbols[-4:]}"
 
+
 # @log()
 @log(filename=os.path.join(ROOT_DIR, r"data/mylog.txt"))
 def get_mask_account(account_number: int | str) -> str:

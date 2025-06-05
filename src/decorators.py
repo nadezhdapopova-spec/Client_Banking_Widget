@@ -1,11 +1,15 @@
 from functools import wraps
+from typing import Any, Callable, ParamSpec, TypeVar
+
+F_Spec = ParamSpec("F_Spec")
+F_Return = TypeVar("F_Return")
 
 
-def log(filename: str=None) -> callable:
+def log(filename: str | None = None) -> Any:
     """Декоратор для логирования работы функций в файл или консоль"""
-    def wrapper(func):
+    def wrapper(func: Callable[F_Spec, F_Return]) -> Callable[F_Spec, F_Return]:
         @wraps(func)
-        def inner(*args, **kwargs):
+        def inner(*args: F_Spec.args, **kwargs: F_Spec.kwargs) -> F_Return:
 
             if filename:
                 with open(filename, "a", encoding="utf-8") as file:

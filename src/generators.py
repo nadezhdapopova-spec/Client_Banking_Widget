@@ -1,8 +1,9 @@
 import os
 
+from mypyc.crash import Iterator
+
 from config import ROOT_DIR
 from src.decorators import log
-from mypyc.crash import Iterator
 
 
 # @log()
