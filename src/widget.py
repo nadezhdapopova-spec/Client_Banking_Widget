@@ -1,9 +1,10 @@
 import os
+from datetime import datetime
 
 from config import ROOT_DIR
 from src.decorators import log
 from src.masks import get_mask_account, get_mask_card_number
-from datetime import datetime
+
 
 # @log()
 @log(filename=os.path.join(ROOT_DIR, r"data/mylog.txt"))
@@ -43,5 +44,5 @@ def get_date(date: str) -> str:
 
         return datetime_obj.strftime("%d.%m.%Y")
 
-    except ValueError as e:
+    except ValueError:
         raise ValueError("Некорректный формат даты.")
