@@ -3,7 +3,7 @@ import os
 from config import ROOT_DIR
 from src.decorators import log
 from src.masks import get_mask_account, get_mask_card_number
-
+from datetime import datetime
 
 # @log()
 @log(filename=os.path.join(ROOT_DIR, r"data/mylog.txt"))
@@ -38,10 +38,10 @@ def get_date(date: str) -> str:
     """
     Функция для преобразования даты в формат 'ДД.ММ.ГГГГ'
     """
+    try:
+        datetime_obj = datetime.fromisoformat(date)
 
-    date_numbers = date[8:10] + date[5:7] + date[:4]
+        return datetime_obj.strftime("%d.%m.%Y")
 
-    if not date_numbers.isdigit() or len(date) < 11:
-        raise ValueError("Некорректная дата.")
-
-    return f"{date[8:10]}.{date[5:7]}.{date[:4]}"
+    except ValueError as e:
+        raise ValueError("Некорректный формат даты.")
