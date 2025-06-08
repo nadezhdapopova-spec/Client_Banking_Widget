@@ -1,7 +1,7 @@
+import os
 from typing import Any
 
 import pytest
-import os
 
 from config import ROOT_DIR
 from src.decorators import log
@@ -55,7 +55,8 @@ def test_log_console_decorator_exception(capsys: Any) -> None:
         exception_exec_console("Неверное значение")
 
     captured = capsys.readouterr()
-    assert (captured.out == "exception_exec_console error: Ошибка: Неверное значение. Inputs: ('Неверное значение',), {}\n\n")
+    assert (captured.out == "exception_exec_console error: Ошибка: Неверное значение. " +
+                            "Inputs: ('Неверное значение',), {}\n\n")
 
 
 def test_log_file_decorator() -> None:
@@ -69,7 +70,7 @@ def test_log_file_decorator() -> None:
     file_content = read_test_file(filepath)
     assert file_content[0] == "normal_exec_file ok\n"
     assert (file_content[1] == "Function normal_exec_file called with args: " +
-                                "('Alice',) and kwargs: {}. Result: Hello Alice\n")
+                               "('Alice',) and kwargs: {}. Result: Hello Alice\n")
 
 
 def test_log_file_decorator_exception() -> None:
@@ -81,4 +82,5 @@ def test_log_file_decorator_exception() -> None:
         exception_exec_file("Неверное значение")
 
     file_content = read_test_file(filepath)
-    assert file_content[0] == "exception_exec_file error: Ошибка: Неверное значение. Inputs: ('Неверное значение',), {}\n"
+    assert (file_content[0] == "exception_exec_file error: Ошибка: " +
+                               "Неверное значение. Inputs: ('Неверное значение',), {}\n")
