@@ -174,3 +174,4 @@ cython_debug/
 .pypirc
 
 mylog.txt
+test_exec.txt

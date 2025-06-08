@@ -19,9 +19,11 @@ def log(filename: str | None = None) -> Any:
                         file.write(f"Function {func.__name__} called with args: {args} and kwargs: {kwargs}. "
                                    f"Result: {result}\n\n")
 
+                        return result
+
                     except Exception as e:
                         file.write(f"{func.__name__} error: {e} Inputs: {args}, {kwargs}\n\n")
-
+                        raise e
             else:
                 try:
                     result = func(*args, **kwargs)
@@ -29,9 +31,10 @@ def log(filename: str | None = None) -> Any:
                     print(f"Function {func.__name__} called with args: {args} and kwargs: {kwargs}. "
                           f"Result: {result}\n")
 
+                    return result
+
                 except Exception as e:
                     print(f"{func.__name__} error: {e} Inputs: {args}, {kwargs}\n")
-
-            return result
+                    raise e
         return inner
     return wrapper
