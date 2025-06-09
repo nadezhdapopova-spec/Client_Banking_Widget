@@ -1,6 +1,13 @@
+import os
+
 from mypyc.crash import Iterator
 
+from config import ROOT_DIR
+from src.decorators import log
 
+
+# @log()
+@log(filename=os.path.join(ROOT_DIR, r"data/mylog.txt"))
 def filter_by_currency(transactions: list[dict], target_currency: str) -> Iterator:
     """Фильтрует транзакции по заданной валюте"""
 
@@ -10,6 +17,8 @@ def filter_by_currency(transactions: list[dict], target_currency: str) -> Iterat
     return filtered_transactions
 
 
+# @log()
+@log(filename=os.path.join(ROOT_DIR, r"data/mylog.txt"))
 def transaction_descriptions(transactions: list[dict]) -> Iterator:
     """Возвращает описание каждой операции транзакции по очереди"""
 
@@ -19,17 +28,19 @@ def transaction_descriptions(transactions: list[dict]) -> Iterator:
         yield desc
 
 
+# @log()
+@log(filename=os.path.join(ROOT_DIR, r"data/mylog.txt"))
 def card_number_generator(start: int, stop: int) -> Iterator:
     """Генерирует и возвращает номера банковских карт в заданном диапазоне номеров"""
 
     if start <= 0 or start > 9999999999999999:
-        raise ValueError("Заданы невалидные значения")
+        raise ValueError("Заданы невалидные значения.")
 
     if stop > 9999999999999999:
-        raise ValueError("Заданы невалидные значения")
+        raise ValueError("Заданы невалидные значения.")
 
     if start > stop:
-        raise ValueError("Заданы невалидные значения")
+        raise ValueError("Заданы невалидные значения.")
 
     card_numbers = (str(num).zfill(16) for num in range(start, stop + 1))
 

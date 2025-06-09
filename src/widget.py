@@ -1,6 +1,13 @@
+import os
+from datetime import datetime
+
+from config import ROOT_DIR
+from src.decorators import log
 from src.masks import get_mask_account, get_mask_card_number
 
 
+# @log()
+@log(filename=os.path.join(ROOT_DIR, r"data/mylog.txt"))
 def mask_account_card(card_or_account: str) -> str:
     """
     Функция для получения маски номера банковского счёта в формате **XXXX
@@ -26,14 +33,16 @@ def mask_account_card(card_or_account: str) -> str:
         return f"{title}{get_mask_card_number(int(number))}"
 
 
+# @log()
+@log(filename=os.path.join(ROOT_DIR, r"data/mylog.txt"))
 def get_date(date: str) -> str:
     """
     Функция для преобразования даты в формат 'ДД.ММ.ГГГГ'
     """
+    try:
+        datetime_obj = datetime.fromisoformat(date)
 
-    date_numbers = date[8:10] + date[5:7] + date[:4]
+        return datetime_obj.strftime("%d.%m.%Y")
 
-    if not date_numbers.isdigit() or len(date) < 11:
-        raise ValueError("Некорректная дата.")
-
-    return f"{date[8:10]}.{date[5:7]}.{date[:4]}"
+    except ValueError:
+        raise ValueError("Некорректный формат даты.")

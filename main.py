@@ -8,6 +8,7 @@ def main_1() -> None:
     """Вывод маски банковской карты и маски банковского счета клиента"""
     card_number = 4276838078111455
     account_number = 88427683807811146790
+    # card_number = (" ")
 
     try:
         print("Маска банковской карты:", get_mask_card_number(card_number))
@@ -16,7 +17,7 @@ def main_1() -> None:
         print(f"Error: {e}")
 
 
-main_1()
+# main_1()
 
 
 def main_2() -> None:
@@ -25,6 +26,7 @@ def main_2() -> None:
     # account_or_card = "Счет 73654108430135874305"
     # account_or_card = "Maestro 1596837868705199"
     # account_or_card = "Счет 73654108430135874305"
+    # account_or_card = " "
 
     try:
         print(mask_account_card(account_or_card))
@@ -32,12 +34,14 @@ def main_2() -> None:
         print(f"Error: {e}")
 
 
-main_2()
+# main_2()
 
 
 def main_3() -> None:
     """Вывод даты в формате 'ДД.ММ.ГГГГ'"""
     date = "2024-03-11T02:26:18.671407"
+    # date = "2024/03/11T02:26:18.671407"
+    # date = " "
     print(get_date(date))
 
 
@@ -57,7 +61,7 @@ def main_4() -> None:
     print(filter_by_state(information))
 
 
-main_4()
+# main_4()
 
 
 def main_5() -> None:
@@ -74,7 +78,7 @@ def main_5() -> None:
     print()
 
 
-main_5()
+# main_5()
 
 
 def main_6() -> None:
@@ -167,7 +171,7 @@ def main_6() -> None:
         print(next(target_transactions, "End"))
 
 
-main_6()
+# main_6()
 
 
 def main_7() -> None:
@@ -256,7 +260,7 @@ def main_7() -> None:
         print(next(descriptions, "End"))
 
 
-main_7()
+# main_7()
 
 
 def main_8() -> None:
@@ -276,4 +280,4 @@ def main_8() -> None:
         print(f"Error: {e}")
 
 
-main_8()
+# main_8()
