@@ -1,6 +1,6 @@
 import os
-import requests
 
+import requests
 from dotenv import load_dotenv
 
 
@@ -30,4 +30,4 @@ def transact_conversion_to_rubles(transact: dict) -> float:
     else:
         raise ValueError("Некорректные данные.")
 
-    return result
+    return float(result)
