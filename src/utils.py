@@ -3,7 +3,7 @@ import os
 
 
 def deserialize_info(filepath: str) -> list[dict]:
-    """Преобразование JSON-строки в Python-объекты"""
+    """Преобразование JSON-строки в Python-объекты."""
     if os.path.getsize(filepath) == 0:
         return []
 
