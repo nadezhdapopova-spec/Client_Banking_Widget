@@ -1,5 +1,8 @@
+from typing import Any
 from unittest.mock import Mock, patch
+
 import pytest
+
 from src.external_api import transact_conversion_to_rubles
 
 
@@ -18,7 +21,7 @@ def test_rub_conversion() -> None:
 
 @patch("os.getenv", return_value="fake_api_key")
 @patch("requests.get")
-def test_usd_conversion(mock_get, mock_getenv) -> None:
+def test_usd_conversion(mock_get: Any, mock_getenv: Any) -> None:
     mock_response = Mock()
     mock_response.json.return_value = {"result": 7900.00}
     mock_get.return_value = mock_response
@@ -39,7 +42,7 @@ def test_usd_conversion(mock_get, mock_getenv) -> None:
 
 @patch("os.getenv", return_value="fake_api_key")
 @patch("requests.get")
-def test_eur_conversion(mock_get, mock_getenv) -> None:
+def test_eur_conversion(mock_get: Any, mock_getenv: Any) -> None:
     mock_response = Mock()
     mock_response.json.return_value = {"result": 9001.00}
     mock_get.return_value = mock_response
@@ -87,7 +90,7 @@ def test_conversion_without_value() -> None:
 
 
 def test_conversion_space() -> None:
-    transact = {}
+    transact: dict = {}
 
     with pytest.raises(KeyError):
         transact_conversion_to_rubles(transact)
