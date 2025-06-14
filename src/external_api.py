@@ -27,6 +27,9 @@ def transact_conversion_to_rubles(transact: dict) -> float:
     elif transact["operationAmount"]["currency"]["code"] == "RUB":
         result = transact["operationAmount"]["amount"]
 
+    elif not transact["operationAmount"]["currency"]["code"]:
+        raise KeyError("Некорректные данные.")
+
     else:
         raise ValueError("Некорректные данные.")
 
