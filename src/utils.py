@@ -11,7 +11,7 @@ def deserialize_info(filepath: str) -> list[dict]:
         with open(filepath, encoding="utf-8") as f:
             data = json.load(f)
 
-            if type(data) != list:
+            if not isinstance(data, list):
                 return []
 
             return data
