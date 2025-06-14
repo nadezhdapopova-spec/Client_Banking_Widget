@@ -348,7 +348,7 @@ def main_10() -> None:
         "to": "Счет 64686473678894779589"
     }
 
-    print(transact_conversion_to_rubles(transaction))
+    print(f"{transact_conversion_to_rubles(transaction)} rub.")
 
 
 main_10()
