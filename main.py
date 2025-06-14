@@ -1,6 +1,10 @@
+import os
+
+from config import ROOT_DIR
 from src.generators import card_number_generator, filter_by_currency, transaction_descriptions
 from src.masks import get_mask_account, get_mask_card_number
 from src.processing import filter_by_state, sort_by_date
+from src.utils import deserialize_info
 from src.widget import get_date, mask_account_card
 
 
@@ -45,7 +49,7 @@ def main_3() -> None:
     print(get_date(date))
 
 
-main_3()
+# main_3()
 
 
 def main_4() -> None:
@@ -281,3 +285,13 @@ def main_8() -> None:
 
 
 # main_8()
+
+
+def main_9() -> None:
+    """Возвращает из JSON-файла данные о финансовых транзакциях"""
+    filepath = os.path.join(ROOT_DIR, r"data/operations.json")
+
+    print(deserialize_info(filepath))
+
+
+main_9()
