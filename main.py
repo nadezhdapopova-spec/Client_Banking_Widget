@@ -1,11 +1,16 @@
+import os
+
+from config import ROOT_DIR
+from src.external_api import transact_conversion_to_rubles
 from src.generators import card_number_generator, filter_by_currency, transaction_descriptions
 from src.masks import get_mask_account, get_mask_card_number
 from src.processing import filter_by_state, sort_by_date
+from src.utils import deserialize_info
 from src.widget import get_date, mask_account_card
 
 
 def main_1() -> None:
-    """Вывод маски банковской карты и маски банковского счета клиента"""
+    """Вывод маски банковской карты и маски банковского счета клиента."""
     card_number = 4276838078111455
     account_number = 88427683807811146790
     # card_number = (" ")
@@ -21,7 +26,7 @@ def main_1() -> None:
 
 
 def main_2() -> None:
-    """Вывод маски банковской карты или маски банковского счета клиента"""
+    """Вывод маски банковской карты или маски банковского счета клиента."""
     account_or_card = "Visa Platinum 7000792289606361"
     # account_or_card = "Счет 73654108430135874305"
     # account_or_card = "Maestro 1596837868705199"
@@ -38,18 +43,18 @@ def main_2() -> None:
 
 
 def main_3() -> None:
-    """Вывод даты в формате 'ДД.ММ.ГГГГ'"""
+    """Вывод даты в формате 'ДД.ММ.ГГГГ'."""
     date = "2024-03-11T02:26:18.671407"
     # date = "2024/03/11T02:26:18.671407"
     # date = " "
     print(get_date(date))
 
 
-main_3()
+# main_3()
 
 
 def main_4() -> None:
-    """Вывод списка данных о банковских операциях, отфильтрованных по статусу"""
+    """Вывод списка данных о банковских операциях, отфильтрованных по статусу."""
 
     state = "CANCELED"
     information = [{'id': 41428829, 'state': 'EXECUTED', 'date': '2019-07-03T18:35:29.512364'},
@@ -65,7 +70,7 @@ def main_4() -> None:
 
 
 def main_5() -> None:
-    """Вывод списка данных о банковских операциях, отсортированных по дате"""
+    """Вывод списка данных о банковских операциях, отсортированных по дате."""
 
     decrease = False
     information = [{'id': 41428829, 'state': 'EXECUTED', 'date': '2019-07-03T18:35:29.512364'},
@@ -82,7 +87,7 @@ def main_5() -> None:
 
 
 def main_6() -> None:
-    """Вывод списка транзакций с заданной валютой"""
+    """Вывод списка транзакций с заданной валютой."""
 
     target_currency = "USD"
     # target_currency = "руб."
@@ -175,7 +180,7 @@ def main_6() -> None:
 
 
 def main_7() -> None:
-    """Вывод описания каждой операции транзакций по очереди"""
+    """Вывод описания каждой операции транзакций по очереди."""
     transactions = ([
         {
             "id": 939719570,
@@ -265,7 +270,7 @@ def main_7() -> None:
 
 def main_8() -> None:
     """Вывод номеров банковских карт в формате XXXX XXXX XXXX XXXX,
-       сгенерированных в заданном диапазоне"""
+       сгенерированных в заданном диапазоне."""
 
     start = 1
     stop = 4
@@ -281,3 +286,69 @@ def main_8() -> None:
 
 
 # main_8()
+
+
+def main_9() -> None:
+    """Возвращает из JSON-файла данные о финансовых транзакциях."""
+    filepath = os.path.join(ROOT_DIR, r"data/operations.json")
+
+    print(deserialize_info(filepath))
+
+
+# main_9()
+
+
+def main_10() -> None:
+    """Возвращает сумму транзакции в рублях."""
+    # transaction = {
+    #     "id": 441945886,
+    #     "state": "EXECUTED",
+    #     "date": "2019-08-26T10:50:58.294041",
+    #     "operationAmount": {
+    #         "amount": "31957.58",
+    #         "currency": {
+    #             "name": "руб.",
+    #             "code": "RUB"
+    #         }
+    #     },
+    #     "description": "Перевод организации",
+    #     "from": "Maestro 1596837868705199",
+    #     "to": "Счет 64686473678894779589"
+    # }
+    #
+    # transaction = {
+    #     "id": 41428829,
+    #     "state": "EXECUTED",
+    #     "date": "2019-07-03T18:35:29.512364",
+    #     "operationAmount": {
+    #         "amount": "8221.37",
+    #         "currency": {
+    #             "name": "USD",
+    #             "code": "USD"
+    #         }
+    #     },
+    #     "description": "Перевод организации",
+    #     "from": "MasterCard 7158300734726758",
+    #     "to": "Счет 35383033474447895560"
+    # }
+
+    transaction = {
+        "id": 441945868,
+        "state": "EXECUTED",
+        "date": "2019-08-26T10:50:58.294041",
+        "operationAmount": {
+            "amount": "31957.58",
+            "currency": {
+                "name": "EUR",
+                "code": "EUR"
+            }
+        },
+        "description": "Перевод организации",
+        "from": "Maestro 1596837868705199",
+        "to": "Счет 64686473678894779589"
+    }
+
+    print(f"{transact_conversion_to_rubles(transaction)} rub.")
+
+
+main_10()

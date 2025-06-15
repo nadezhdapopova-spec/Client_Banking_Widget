@@ -90,6 +90,35 @@ for card_number in card_number_generator(1, 5):
 0000 0000 0000 0004
 0000 0000 0000 0005
 ````
+* **deserialize_info:** преобразование JSON-строки в Python-объекты 
+(используется для получения из JSON-файла данных о финансовых транзакциях)
+
+
+* **transact_conversion_to_rubles:** конвертация валюты из USD и EUR в рубли и получение суммы транзакции в рублях
+
+Пример работы функции:
+````
+# вызов функции
+
+transaction = {
+        "id": 441945868,
+        "state": "EXECUTED",
+        "date": "2019-08-26T10:50:58.294041",
+        "operationAmount": {
+            "amount": "31957.58",
+            "currency": {
+                "name": "EUR",
+                "code": "EUR"
+            }
+        }
+    }
+    
+print(transact_conversion_to_rubles(transaction))
+
+# выход функции
+
+2946075.57 rub.
+````
 
 ### В проекте содержатся декораторы:
 
