@@ -3,7 +3,6 @@ import os.path
 
 from config import ROOT_DIR
 
-
 masks_logger = logging.getLogger("masks_logger")
 masks_handler = logging.FileHandler(os.path.join(ROOT_DIR, "logs", "masks.log"), "w", encoding="utf-8")
 masks_formatter = logging.Formatter("%(asctime)s - %(filename)s - %(levelname)s - %(message)s",
