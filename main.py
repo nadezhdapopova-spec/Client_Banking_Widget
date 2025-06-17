@@ -3,6 +3,7 @@ import os
 from config import ROOT_DIR
 from src.external_api import transact_conversion_to_rubles
 from src.generators import card_number_generator, filter_by_currency, transaction_descriptions
+from src.logging_config import masks_logger, utils_logger
 from src.masks import get_mask_account, get_mask_card_number
 from src.processing import filter_by_state, sort_by_date
 from src.utils import deserialize_info
@@ -13,16 +14,19 @@ def main_1() -> None:
     """Вывод маски банковской карты и маски банковского счета клиента."""
     card_number = 4276838078111455
     account_number = 88427683807811146790
-    # card_number = (" ")
+    # card_number = " "
 
     try:
+        masks_logger.info(f"Получены данные card_number = {card_number}.")
         print("Маска банковской карты:", get_mask_card_number(card_number))
+        masks_logger.info(f"Получены данные account_number = {account_number}.")
         print("Маска банковского счета:", get_mask_account(account_number))
-    except ValueError as e:
+    except Exception as e:
+        masks_logger.error(f"Неудачная попытка ввода данных: {e}")
         print(f"Error: {e}")
 
 
-# main_1()
+main_1()
 
 
 def main_2() -> None:
@@ -292,10 +296,11 @@ def main_9() -> None:
     """Возвращает из JSON-файла данные о финансовых транзакциях."""
     filepath = os.path.join(ROOT_DIR, r"data/operations.json")
 
+    utils_logger.info(f"Получен путь до JSON-файла {filepath}.")
     print(deserialize_info(filepath))
 
 
-# main_9()
+main_9()
 
 
 def main_10() -> None:
@@ -351,4 +356,4 @@ def main_10() -> None:
     print(f"{transact_conversion_to_rubles(transaction)} rub.")
 
 
-main_10()
+# main_10()
