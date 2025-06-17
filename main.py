@@ -14,15 +14,15 @@ def main_1() -> None:
     """Вывод маски банковской карты и маски банковского счета клиента."""
     card_number = 4276838078111455
     account_number = 88427683807811146790
-    # card_number = (" ")
+    # card_number = " "
 
     try:
         masks_logger.info(f"Получены данные card_number = {card_number}.")
         print("Маска банковской карты:", get_mask_card_number(card_number))
         masks_logger.info(f"Получены данные account_number = {account_number}.")
         print("Маска банковского счета:", get_mask_account(account_number))
-    except ValueError as e:
-        masks_logger.error(f"Неудачная попытка ввода данных: введены некорректные данные.")
+    except Exception as e:
+        masks_logger.error(f"Неудачная попытка ввода данных: {e}")
         print(f"Error: {e}")
 
 
