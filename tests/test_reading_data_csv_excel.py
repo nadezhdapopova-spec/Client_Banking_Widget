@@ -1,8 +1,7 @@
 from typing import Any
+from unittest.mock import patch
 
 import pandas as pd
-
-from unittest.mock import patch
 
 from src.reading_data_csv_excel import read_transactions_csv, read_transactions_excel
 
