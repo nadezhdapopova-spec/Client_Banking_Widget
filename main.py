@@ -294,7 +294,7 @@ def main_8() -> None:
 
 
 def main_9() -> None:
-    """Возвращает из JSON-файла данные о финансовых транзакциях."""
+    """Вывод из JSON-файла данных о финансовых транзакциях."""
     filepath = os.path.join(ROOT_DIR, r"data/operations.json")
 
     utils_logger.info(f"Получен путь до JSON-файла {filepath}.")
@@ -305,7 +305,7 @@ def main_9() -> None:
 
 
 def main_10() -> None:
-    """Возвращает сумму транзакции в рублях."""
+    """Вывод суммы транзакции в рублях."""
     # transaction = {
     #     "id": 441945886,
     #     "state": "EXECUTED",
@@ -361,6 +361,7 @@ def main_10() -> None:
 
 
 def main_11() -> None:
+    """Вывод из CSV-файла данных о финансовых операциях"""
     filepath = os.path.join(ROOT_DIR, "data", "transactions.csv")
 
     print(read_transactions_csv(filepath))
@@ -370,6 +371,7 @@ main_11()
 
 
 def main_12() -> None:
+    """Вывод из XLSX-файла данных о финансовых операциях"""
     filepath = os.path.join(ROOT_DIR, "data", "transactions_excel.xlsx")
 
     print(read_transactions_excel(filepath))

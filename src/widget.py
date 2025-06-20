@@ -36,9 +36,7 @@ def mask_account_card(card_or_account: str) -> str:
 # @log()
 @log(filename=os.path.join(ROOT_DIR, r"data/mylog.txt"))
 def get_date(date: str) -> str:
-    """
-    Функция для преобразования даты в формат 'ДД.ММ.ГГГГ'
-    """
+    """Функция для преобразования даты в формат 'ДД.ММ.ГГГГ'"""
     try:
         datetime_obj = datetime.fromisoformat(date)
 
