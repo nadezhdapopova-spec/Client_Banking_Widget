@@ -28,9 +28,7 @@ def get_mask_card_number(card_number: int | str) -> str:
 # @log()
 @log(filename=os.path.join(ROOT_DIR, r"data/mylog.txt"))
 def get_mask_account(account_number: int | str) -> str:
-    """
-    Функция для получения маски номера банковского счёта в формате **XXXX
-    """
+    """Функция для получения маски номера банковского счёта в формате **XXXX"""
     account_symbols = str(account_number)
 
     if len(account_symbols) < 4:
