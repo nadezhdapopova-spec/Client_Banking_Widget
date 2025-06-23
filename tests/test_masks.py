@@ -70,13 +70,15 @@ card_numbers = card_number_generator(1, 5)
 cards_list = []
 for _ in range(4):
     cards_list.append(next(card_numbers, "End").replace(" ", ""))
+
+
 @pytest.mark.parametrize("card_number, expected", [
     (cards_list[0], "0000 00** **** 0001"),
     (cards_list[1], "0000 00** **** 0002"),
     (cards_list[2], "0000 00** **** 0003"),
     (cards_list[3], "0000 00** **** 0004"),
 ])
-def test_get_mask_card_number_success(card_number: int | str, expected: str) -> None:
+def test_get_mask_card_number_generate(card_number: int | str, expected: str) -> None:
     assert get_mask_card_number(card_number) == expected
 
 

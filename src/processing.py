@@ -1,5 +1,4 @@
 import os
-import re
 
 from config import ROOT_DIR
 from src.decorators import log
