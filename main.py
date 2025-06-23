@@ -290,7 +290,7 @@ def main_8() -> None:
         print(f"Error: {e}")
 
 
-# main_8()
+main_8()
 
 
 def main_9() -> None:
@@ -367,7 +367,7 @@ def main_11() -> None:
     print(read_transactions_csv(filepath))
 
 
-main_11()
+# main_11()
 
 
 def main_12() -> None:
@@ -377,4 +377,4 @@ def main_12() -> None:
     print(read_transactions_excel(filepath))
 
 
-main_12()
+# main_12()
