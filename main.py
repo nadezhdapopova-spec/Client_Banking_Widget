@@ -469,7 +469,7 @@ def main_13() -> None:
 # main_13()
 
 
-def main_14():
+def main_14() -> None:
     transactions = [
         {
             "id": 939719570,
