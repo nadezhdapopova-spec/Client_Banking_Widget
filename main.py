@@ -5,7 +5,7 @@ from src.external_api import transact_conversion_to_rubles
 from src.generators import card_number_generator, filter_by_currency, transaction_descriptions
 from src.logging_config import masks_logger, utils_logger
 from src.masks import get_mask_account, get_mask_card_number
-from src.processing import filter_by_state, sort_by_date, filter_by_description
+from src.processing import filter_by_description, filter_by_state, sort_by_date
 from src.reading_data_csv_excel import read_transactions_csv, read_transactions_excel
 from src.utils import deserialize_info
 from src.widget import get_date, mask_account_card
