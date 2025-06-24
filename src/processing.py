@@ -1,4 +1,5 @@
 import os
+import re
 
 from config import ROOT_DIR
 from src.decorators import log
@@ -25,3 +26,19 @@ def sort_by_date(operations_information: list[dict], decrease: bool = True) -> l
             inf["date"] = get_date(inf["date"])
 
     return operations_information
+
+
+def filter_by_description(transactions: list[dict], target_string: str) -> list[dict]:
+    """Фильтрация списка данных о банковских операциях по заданному описанию"""
+    try:
+        pattern = re.compile(target_string, re.IGNORECASE)
+        target_transactions = list()
+
+        for item in transactions:
+            if any(pattern.search(str(value)) for value in item.values()):
+                target_transactions.append(item)
+
+        return target_transactions
+
+    except Exception as e:
+        raise Exception(f"Ошибка: {e}. Введены некорректные данные.")
