@@ -28,6 +28,8 @@ def sort_by_date(operations_information: list[dict], decrease: bool = True) -> l
     return operations_information
 
 
+# @log()
+@log(filename=os.path.join(ROOT_DIR, r"data/mylog.txt"))
 def filter_by_description(transactions: list[dict], target_string: str) -> list[dict]:
     """Фильтрация списка данных о банковских операциях по заданному описанию"""
     try:
