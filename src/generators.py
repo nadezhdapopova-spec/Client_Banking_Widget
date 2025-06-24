@@ -10,9 +10,8 @@ from src.decorators import log
 @log(filename=os.path.join(ROOT_DIR, r"data/mylog.txt"))
 def filter_by_currency(transactions: list[dict], target_currency: str) -> Iterator:
     """Фильтрует транзакции по заданной валюте"""
-
     filtered_transactions = (transact for transact in transactions if
-                             transact["operationAmount"]["currency"]["name"] == target_currency)
+                             transact["currency_name"] == target_currency)
 
     return filtered_transactions
 

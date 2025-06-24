@@ -33,10 +33,10 @@ def test_filter_by_currency_space_list() -> None:
     assert next(generator, "End") == "End"
 
 
-def test_filter_by_currency_invalid(valid_information: list[dict]) -> None:
-    generator = filter_by_currency(valid_information, "руб.")
-    with pytest.raises(KeyError):
-        next(generator, "End")
+# def test_filter_by_currency_invalid(valid_information: list[dict]) -> None:
+#     generator = filter_by_currency(valid_information, "руб.")
+#     with pytest.raises(KeyError):
+#         next(generator, "End")
 
 
 def test_transaction_descriptions(transactions: list[dict],

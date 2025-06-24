@@ -8,12 +8,8 @@ from src.external_api import transact_conversion_to_rubles
 
 def test_rub_conversion() -> None:
     transact = {
-        "operationAmount": {
-            "amount": 10000.5,
-            "currency": {
-                "code": "RUB"
-            }
-        }
+        "amount": 10000.5,
+        "currency_code": "RUB"
     }
 
     assert transact_conversion_to_rubles(transact) == 10000.5
@@ -27,12 +23,8 @@ def test_usd_conversion(mock_get: Any, mock_getenv: Any) -> None:
     mock_get.return_value = mock_response
 
     transact = {
-        "operationAmount": {
-            "amount": 100,
-            "currency": {
-                "code": "USD"
-            }
-        }
+        "amount": 100,
+        "currency_code": "USD"
     }
 
     assert transact_conversion_to_rubles(transact) == 7900.00
@@ -48,12 +40,8 @@ def test_eur_conversion(mock_get: Any, mock_getenv: Any) -> None:
     mock_get.return_value = mock_response
 
     transact = {
-        "operationAmount": {
-            "amount": 100,
-            "currency": {
-                "code": "EUR"
-            }
-        }
+        "amount": 100,
+        "currency_code": "EUR"
     }
 
     assert transact_conversion_to_rubles(transact) == 9001.00
@@ -63,12 +51,8 @@ def test_eur_conversion(mock_get: Any, mock_getenv: Any) -> None:
 
 def test_conversion_invalid() -> None:
     transact = {
-        "operationAmount": {
-            "amount": 100,
-            "currency": {
-                "code": "CNY"
-            }
-        }
+        "amount": 100,
+        "currency_code": "CNY"
     }
 
     with pytest.raises(ValueError):
@@ -77,12 +61,8 @@ def test_conversion_invalid() -> None:
 
 def test_conversion_without_value() -> None:
     transact = {
-        "operationAmount": {
-            "amount": 100,
-            "currency": {
-                "code": ""
-            }
-        }
+        "amount": 100,
+        "currency_code": ""
     }
 
     with pytest.raises(KeyError):
