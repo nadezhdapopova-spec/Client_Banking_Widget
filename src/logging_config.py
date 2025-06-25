@@ -19,3 +19,13 @@ utils_formatter = logging.Formatter("%(asctime)s - %(filename)s - %(levelname)s 
 utils_handler.setFormatter(utils_formatter)
 utils_logger.addHandler(utils_handler)
 utils_logger.setLevel(logging.DEBUG)
+
+
+reading_csv_excel_logger = logging.getLogger("reading_csv_excel_logger")
+reading_csv_excel_handler = logging.FileHandler(os.path.join(ROOT_DIR, "logs", "reading_csv_excel_.log"),
+                                                "w", encoding="utf-8")
+reading_csv_excel_formatter = logging.Formatter("%(asctime)s - %(filename)s - %(levelname)s - %(message)s",
+                                    datefmt="%Y-%m-%d %H:%M:%S")
+reading_csv_excel_handler.setFormatter(reading_csv_excel_formatter)
+reading_csv_excel_logger.addHandler(reading_csv_excel_handler)
+reading_csv_excel_logger.setLevel(logging.DEBUG)
