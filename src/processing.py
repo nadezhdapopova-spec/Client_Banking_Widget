@@ -18,7 +18,6 @@ def filter_by_state(operations_information: list[dict], state: str = "EXECUTED")
 @log(filename=os.path.join(ROOT_DIR, r"data/mylog.txt"))
 def sort_by_date(operations_information: list[dict], decrease: bool = True) -> list[dict]:
     """Сортировка списка данных о банковских операциях по дате"""
-
     operations_information = sorted(operations_information, key=lambda inform: inform["date"], reverse=decrease)
 
     for inf in operations_information:

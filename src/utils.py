@@ -27,9 +27,8 @@ def deserialize_info(filepath: str) -> list[dict]:
         return []
 
 
-def formate_json_data(transactions):
+def formate_json_data(transactions: list[dict]) -> list[dict]:
     """Приведение списка транзакций из JSON-файла к единой форме"""
-    keys = ["id", "state", "date", "amount", "currency_name", "currency_code", "from", "to", "description"]
     formated_transactions = []
 
     for trans in transactions:
