@@ -1,4 +1,5 @@
 import os
+from typing import Any
 
 from config import ROOT_DIR
 from src.counters import count_bank_operations
@@ -8,8 +9,7 @@ from src.logging_config import utils_logger
 from src.processing import filter_by_description, filter_by_state, sort_by_date
 from src.reading_data_csv_excel import read_transactions_csv, read_transactions_excel
 from src.utils import deserialize_info, formate_json_data
-from src.widget import mask_account_card, get_date
-
+from src.widget import get_date, mask_account_card
 
 FROM_JSON = 1
 FROM_CSV = 2
@@ -22,7 +22,7 @@ MAX_CHOICE = 5
 
 def main() -> None:
     """Выводит главное меню программы."""
-    print(f"Привет! Добро пожаловать в программу работы с банковскими транзакциями.\n")
+    print("Привет! Добро пожаловать в программу работы с банковскими транзакциями.\n")
 
     choice = 0
 
@@ -120,7 +120,7 @@ def convert_transact_to_rub() -> None:
         print("Ошибка доступа. Попробуйте повторить позже\n")
 
 
-def filtered_by_state(transactions: list[dict]) -> list[dict]:
+def filtered_by_state(transactions: list[dict]) -> Any:
     """Получает у пользователя статус для отбора финансовых транзакций."""
     states = ("EXECUTED", "CANCELED", "PENDING")
     state = ""
@@ -155,8 +155,7 @@ def filter_by_options(filtered_transactions: list[dict]) -> list[dict]:
                 filtered_transactions.remove(transact)
                 continue
 
-
-    by_currency = input("Выводить только рублевые транзакции? Да / Нет: ")
+    by_currency = input("Выводить только рублевые транзакции? Да/Нет: ")
     if by_currency.lower() == "да":
         filtered_transactions = filter_by_currency(filtered_transactions, "руб.")
 
@@ -167,7 +166,7 @@ def filter_by_options(filtered_transactions: list[dict]) -> list[dict]:
     return filtered_transactions
 
 
-def sorting_by_date(filtered_transactions: list[dict]) -> list[dict]:
+def sorting_by_date(filtered_transactions: list[dict]) -> Any:
     """Возвращает список финансовых транзакций, отсортированный по дате."""
     decrease = int(input("Отсортировать по возрастанию (нажмите 1) или по убыванию (нажмите 2)?: "))
 
@@ -181,7 +180,7 @@ def filtration_by_description(filtered_transactions: list[dict]) -> list[dict]:
     """Возвращает список финансовых транзакций, отфильтрованный по описанию."""
     print("Возможные варианты описания:")
     descriptions = transaction_descriptions(filtered_transactions)
-    print(*descriptions, sep = "\n")
+    print(*descriptions, sep="\n")
 
     target_description = input("Введите слово из описания: ")
     filtered_transactions = filter_by_description(filtered_transactions, target_description)
@@ -213,10 +212,10 @@ def target_transactions_output(target_transactions: list[dict]) -> None:
     target_transactions = list(target_transactions)
 
     if len(target_transactions) == 0:
-        print(f"\nНе найдено ни одной транзакции, подходящей под ваши условия фильтрации\n")
+        print("\nНе найдено ни одной транзакции, подходящей под ваши условия фильтрации\n")
 
     else:
-        print(f"\nРаспечатываю итоговый список транзакций...\n")
+        print("\nРаспечатываю итоговый список транзакций...\n")
         print(f"Всего банковских операций в выборке: {len(target_transactions)}\n")
         print("Из них: ")
         for key, value in categories_counter.items():

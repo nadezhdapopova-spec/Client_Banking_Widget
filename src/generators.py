@@ -20,9 +20,7 @@ def filter_by_currency(transactions: list[dict], target_currency: str) -> Iterat
 @log(filename=os.path.join(ROOT_DIR, r"data/mylog.txt"))
 def transaction_descriptions(transactions: list[dict]) -> Iterator:
     """Возвращает описание каждой операции транзакции по очереди"""
-    descriptions = (transact["description"] for transact in transactions)
-
-    descriptions = set(descriptions)
+    descriptions = set(transact["description"] for transact in transactions)
 
     for desc in descriptions:
         yield desc
