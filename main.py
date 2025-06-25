@@ -52,7 +52,7 @@ def main() -> None:
 
 
 def display_menu() -> None:
-    """Меню получения информации о транзакциях."""
+    """Меню получения информации о финансовых транзакциях."""
     print("""Выберите необходимый пункт меню:
             1. Получить информацию о транзакциях из JSON - файла
             2. Получить информацию о транзакциях из CSV - файла
@@ -157,7 +157,7 @@ def filter_by_options(filtered_transactions: list[dict]) -> list[dict]:
 
     by_currency = input("Выводить только рублевые транзакции? Да/Нет: ")
     if by_currency.lower() == "да":
-        filtered_transactions = filter_by_currency(filtered_transactions, "руб.")
+        filtered_transactions = list(filter_by_currency(filtered_transactions, "руб."))
 
     by_description = input("Отфильтровать список транзакций по определенному слову в описании? Да/Нет: ")
     if by_description.lower() == "да":
