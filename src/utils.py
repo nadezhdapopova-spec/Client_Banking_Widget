@@ -33,11 +33,15 @@ def formate_json_data(transactions):
     formated_transactions = []
 
     for trans in transactions:
-        trans_dict = {"id": trans["id"], "state": trans["state"], "date": trans["date"],
-                      "amount": trans["operationAmount"]["amount"],
-                      "currency_name": trans["operationAmount"]["currency"]["name"],
-                      "currency_code": trans["operationAmount"]["currency"]["code"], "from": trans["from"],
-                      "to": trans["to"], "description": trans["description"]}
+        trans_dict = {"id": trans.get("id"),
+                      "state": trans.get("state"),
+                      "date": trans.get("date"),
+                      "amount": trans.get("operationAmount", {}).get("amount"),
+                      "currency_name": trans.get("operationAmount", {}).get("currency", {}).get("name"),
+                      "currency_code": trans.get("operationAmount", {}).get("currency", {}).get("code"),
+                      "from": trans.get("from"),
+                      "to": trans.get("to"),
+                      "description": trans.get("description")}
 
         formated_transactions.append(trans_dict)
 

@@ -8,7 +8,7 @@ from src.logging_config import utils_logger
 from src.processing import filter_by_description, filter_by_state, sort_by_date
 from src.reading_data_csv_excel import read_transactions_csv, read_transactions_excel
 from src.utils import deserialize_info, formate_json_data
-from src.widget import mask_account_card
+from src.widget import mask_account_card, get_date
 
 
 # def main_1() -> None:
@@ -565,7 +565,7 @@ MAX_CHOICE = 4
 
 def main() -> None:
     """Выводит главное меню программы."""
-    print("Привет! Добро пожаловать в программу работы с банковскими транзакциями.")
+    print(f"Привет! Добро пожаловать в программу работы с банковскими транзакциями.\n")
 
     choice = 0
 
@@ -586,10 +586,9 @@ def main() -> None:
 
         filtered_transactions = filtered_by_state(transactions)
         target_transactions = filter_by_options(filtered_transactions)
+        masked_target_transactions = mask_transactions(target_transactions)
 
-        target_transactions_output(target_transactions)
-
-        print(target_transactions)
+        target_transactions_output(masked_target_transactions)
 
 
 def display_menu():
@@ -642,7 +641,7 @@ def get_inform_from_xlsx():
 
 
 def filtered_by_state(transactions):
-    """Получает у пользователя параметры для отбора финансовых транзакций."""
+    """Получает у пользователя статус для отбора финансовых транзакций."""
     states = ("EXECUTED", "CANCELED", "PENDING")
     state = ""
 
@@ -659,9 +658,22 @@ def filtered_by_state(transactions):
 
 
 def filter_by_options(filtered_transactions):
+    """Получает у пользователя дополнительные параметры для отбора финансовых транзакций."""
+    filtered_transactions = list(filtered_transactions)
+
     by_date = input("Отсортировать операции по дате? Да/Нет: ")
     if by_date.lower() == "да":
         filtered_transactions = sorting_by_date(filtered_transactions)
+
+    else:
+        for transact in filtered_transactions:
+            try:
+                if isinstance(transact["date"], str):
+                    transact["date"] = get_date(transact["date"])
+
+            except Exception:
+                filtered_transactions.remove(transact)
+                continue
 
 
     by_currency = input("Выводить только рублевые транзакции? Да / Нет: ")
@@ -676,7 +688,9 @@ def filter_by_options(filtered_transactions):
 
 
 def sorting_by_date(filtered_transactions):
+    """Возвращает список финансовых транзакций, отсортированный по дате."""
     decrease = int(input("Отсортировать по возрастанию (нажмите 1) или по убыванию (нажмите 2)?: "))
+
     if decrease == 1:
         return sort_by_date(filtered_transactions, False)
     else:
@@ -684,27 +698,52 @@ def sorting_by_date(filtered_transactions):
 
 
 def filtration_by_description(filtered_transactions):
+    """Возвращает список финансовых транзакций, отфильтрованный по описанию."""
     target_description = input("Введите слово из описания: ")
     filtered_transactions = filter_by_description(filtered_transactions, target_description)
 
     return filtered_transactions
 
 
-def target_transactions_output(target_transactions):
-    categories = ["Перевод организации", "Перевод с карты на карту", "Перевод со счета на счет"]
-    categories_counter = count_bank_operations(target_transactions, categories)
-
-    print(f"Распечатываю итоговый список транзакций...\n")
-    print(f"Всего банковских операций в выборке: {len(target_transactions)}\n")
-    print("Из них: ")
-    for key, value in categories_counter.items():
-        print(f"{key}: {value}")
+def mask_transactions(target_transactions):
+    """Возвращает список финансовых транзакций c масками номеров банковских карт и счетов"""
+    target_transactions = list(target_transactions)
 
     for transact in target_transactions:
-        print(f"{transact["date"]} {transact["description"]}")
-        print(f"{mask_account_card(transact["from"])} -> {mask_account_card(transact["to"])}")
-        print(f"Сумма: {transact["amount"]} {transact["currency_code"]}")
+        try:
+            transact["from"] = mask_account_card(transact["from"])
+            transact["to"] = mask_account_card(transact["to"])
+
+        except Exception:
+            target_transactions.remove(transact)
+            continue
+
+    return target_transactions
+
+
+def target_transactions_output(target_transactions):
+    """Выводит итоговый список финансовых транзакций."""
+    categories = [transact["description"] for transact in target_transactions]
+    categories_counter = count_bank_operations(target_transactions, categories)
+
+    target_transactions = list(target_transactions)
+
+    if len(target_transactions) == 0:
+        print(f"\nНе найдено ни одной транзакции, подходящей под ваши условия фильтрации\n")
+
+    else:
+        print(f"\nРаспечатываю итоговый список транзакций...\n")
+        print(f"Всего банковских операций в выборке: {len(target_transactions)}\n")
+        print("Из них: ")
+        for key, value in categories_counter.items():
+            print(f"{key}: {value}")
+
         print()
+        for transact in target_transactions:
+            print(f"{transact["date"]} {transact["description"]}")
+            print(f"{transact["from"]} -> {transact["to"]}")
+            print(f"Сумма: {transact["amount"]} {transact["currency_code"]}")
+            print()
 
 
 main()
