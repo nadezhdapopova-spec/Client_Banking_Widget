@@ -1,6 +1,6 @@
 import pytest
 
-from src.processing import filter_by_state, sort_by_date
+from src.processing import filter_by_state, sort_by_date, filter_by_description
 
 
 @pytest.mark.parametrize("state, expected", [
@@ -136,3 +136,85 @@ def test_sort_by_date_with_same_dates(information_with_same_dates: list[dict],
 def test_sort_by_date_space(invalid_information: list[dict], decrease: bool = True) -> None:
     with pytest.raises(TypeError):
         sort_by_date(invalid_information, decrease)
+
+
+@pytest.mark.parametrize("target_string, expected", [
+    ("счет",
+     [
+         {
+             "id": 142264268,
+             "state": "EXECUTED",
+             "date": "2019-04-04T23:20:05.206878",
+             "amount": "79114.93",
+             "currency_name": "USD",
+             "currency_code": "USD",
+             "description": "Перевод со счета на счет",
+             "from": "Счет 19708645243227258542",
+             "to": "Счет 75651667383060284188"
+         },
+         {
+            "id": 873106923,
+            "state": "EXECUTED",
+            "date": "2019-03-23T01:09:46.296404",
+            "amount": "43318.34",
+            "currency_name": "руб.",
+            "currency_code": "RUB",
+            "description": "Перевод со счета на счет",
+            "from": "Счет 44812258784861134719",
+            "to": "Счет 74489636417521191160"
+         }
+     ]),
+    ("с карты на карту",
+     [
+         {
+            "id": 895315941,
+            "state": "EXECUTED",
+            "date": "2018-08-19T04:27:37.904916",
+            "amount": "56883.54",
+            "currency_name": "USD",
+            "currency_code": "USD",
+            "description": "Перевод с карты на карту",
+            "from": "Visa Classic 6831982476737658",
+            "to": "Visa Platinum 8990922113665229"
+         }
+     ])
+])
+def test_filter_by_description_success(transactions: list[dict],
+                                       target_string: str,
+                                       expected: list[dict]) -> None:
+    assert filter_by_description(transactions, target_string) == expected
+
+
+@pytest.mark.parametrize("target_string, expected", [("Visa Platinum",[])])
+def test_filter_by_description_invalid_target_string(transactions: list[dict],
+                                       target_string: str,
+                                       expected: list[dict]) -> None:
+    assert filter_by_description(transactions, target_string) == expected
+
+
+@pytest.mark.parametrize("target_string, transactions_list", [
+    ("счет",
+     [
+         {
+             "id": 142264268,
+             "state": "EXECUTED",
+             "date": "2019-04-04T23:20:05.206878",
+             "amount": "79114.93",
+             "currency_name": "USD",
+             "currency_code": "USD",
+             "from": "Счет 19708645243227258542",
+             "to": "Счет 75651667383060284188"
+         }
+     ])
+])
+def test_filter_by_description_not_description(transactions_list: list[dict],
+                                               target_string: str) -> None:
+    with pytest.raises(Exception):
+        filter_by_description(transactions_list, target_string)
+
+
+@pytest.mark.parametrize("target_string, expected", [("счет", [])])
+def test_filter_by_description_space(transactions: list,
+                                       target_string: str,
+                                       expected: list) -> None:
+    assert filter_by_description([], target_string) == expected

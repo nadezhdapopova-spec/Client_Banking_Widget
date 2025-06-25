@@ -36,7 +36,7 @@ def filter_by_description(transactions: list[dict], target_string: str) -> list[
         target_transactions = list()
 
         for item in transactions:
-            if any(pattern.search(str(value)) for value in item.values()):
+            if pattern.search(item.get("description")):
                 target_transactions.append(item)
 
         return target_transactions
