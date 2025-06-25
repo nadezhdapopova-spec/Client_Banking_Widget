@@ -49,32 +49,32 @@ def test_formate_json_data_space() -> None:
     ([
          {
              "id": 441945886,
-            "state": "EXECUTED",
-            "date": "2019-08-26T10:50:58.294041",
-            "operationAmount": {
-              "amount": "31957.58",
-              "currency": {
-                "name": "руб.",
-                "code": "RUB"
-              }
-            },
-            "from": "Maestro 1596837868705199",
-            "to": "Счет 64686473678894779589"
+             "state": "EXECUTED",
+             "date": "2019-08-26T10:50:58.294041",
+             "operationAmount": {
+                 "amount": "31957.58",
+                 "currency": {
+                     "name": "руб.",
+                     "code": "RUB"
+                 }
+             },
+             "from": "Maestro 1596837868705199",
+             "to": "Счет 64686473678894779589"
          }
      ],
-    [
-        {
-            "id": 441945886,
-            "state": "EXECUTED",
-            "date": "2019-08-26T10:50:58.294041",
-            "amount": "31957.58",
-            "currency_name": "руб.",
-            "currency_code": "RUB",
-            "from": "Maestro 1596837868705199",
-            "to": "Счет 64686473678894779589",
-            "description": None
-        }
-    ]),
+        [
+            {
+                "id": 441945886,
+                "state": "EXECUTED",
+                "date": "2019-08-26T10:50:58.294041",
+                "amount": "31957.58",
+                "currency_name": "руб.",
+                "currency_code": "RUB",
+                "from": "Maestro 1596837868705199",
+                "to": "Счет 64686473678894779589",
+                "description": None
+            }
+        ])
 ])
 def test_formate_json_data_invalid(transactions_list: list[dict],
                                    expected: list[dict]) -> None:

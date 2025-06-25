@@ -12,7 +12,7 @@ from src.counters import count_bank_operations
 ])
 def test_count_bank_operations_success(transactions: list[dict],
                                        transact_descriptions: list,
-                                       expected) -> None:
+                                       expected: dict) -> None:
     assert count_bank_operations(transactions, transact_descriptions) == expected
 
 

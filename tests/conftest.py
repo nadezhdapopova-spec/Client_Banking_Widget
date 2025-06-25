@@ -182,7 +182,7 @@ def transactions_formated_from_json() -> list[dict]:
             "from": "Maestro 1596837868705199",
             "to": "Счет 64686473678894779589"
           },
-          {
+        {
             "id": 41428829,
             "state": "EXECUTED",
             "date": "2019-07-03T18:35:29.512364",
@@ -214,7 +214,7 @@ def transactions_from_json() -> list[dict]:
             "from": "Maestro 1596837868705199",
             "to": "Счет 64686473678894779589"
           },
-          {
+        {
             "id": 41428829,
             "state": "EXECUTED",
             "date": "2019-07-03T18:35:29.512364",

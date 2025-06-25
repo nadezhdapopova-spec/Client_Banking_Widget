@@ -1,6 +1,6 @@
 import pytest
 
-from src.processing import filter_by_state, sort_by_date, filter_by_description
+from src.processing import filter_by_description, filter_by_state, sort_by_date
 
 
 @pytest.mark.parametrize("state, expected", [
@@ -185,10 +185,10 @@ def test_filter_by_description_success(transactions: list[dict],
     assert filter_by_description(transactions, target_string) == expected
 
 
-@pytest.mark.parametrize("target_string, expected", [("Visa Platinum",[])])
+@pytest.mark.parametrize("target_string, expected", [("Visa Platinum", [])])
 def test_filter_by_description_invalid_target_string(transactions: list[dict],
-                                       target_string: str,
-                                       expected: list[dict]) -> None:
+                                                     target_string: str,
+                                                     expected: list[dict]) -> None:
     assert filter_by_description(transactions, target_string) == expected
 
 
@@ -209,12 +209,11 @@ def test_filter_by_description_invalid_target_string(transactions: list[dict],
 ])
 def test_filter_by_description_not_description(transactions_list: list[dict],
                                                target_string: str) -> None:
-    with pytest.raises(Exception):
-        filter_by_description(transactions_list, target_string)
+    assert filter_by_description(transactions_list, target_string) == []
 
 
 @pytest.mark.parametrize("target_string, expected", [("счет", [])])
 def test_filter_by_description_space(transactions: list,
-                                       target_string: str,
-                                       expected: list) -> None:
+                                     target_string: str,
+                                     expected: list) -> None:
     assert filter_by_description([], target_string) == expected
