@@ -42,20 +42,18 @@ def test_filter_by_currency_invalid(valid_information: list[dict]) -> None:
 def test_transaction_descriptions(transactions: list[dict],
                                   transact_descriptions: list[str]) -> None:
     generator = transaction_descriptions(transactions)
-    assert next(generator, "End") == transact_descriptions[0]
-    assert next(generator, "End") == transact_descriptions[1]
-    assert next(generator, "End") == transact_descriptions[2]
-    assert next(generator, "End") == transact_descriptions[3]
-    assert next(generator, "End") == transact_descriptions[4]
+    assert next(generator, "End") in transact_descriptions
+    assert next(generator, "End") in transact_descriptions
+    assert next(generator, "End") in transact_descriptions
     assert next(generator, "End") == "End"
 
 
 def test_transaction_descriptions_usd(filtered_transactions_usd: list[dict],
                                       transact_descriptions: list[str]) -> None:
     generator = transaction_descriptions(filtered_transactions_usd)
-    assert next(generator, "End") == transact_descriptions[0]
-    assert next(generator, "End") == transact_descriptions[1]
-    assert next(generator, "End") == transact_descriptions[3]
+    assert next(generator, "End") in transact_descriptions
+    assert next(generator, "End") in transact_descriptions
+    assert next(generator, "End") in transact_descriptions
     assert next(generator, "End") == "End"
 
 

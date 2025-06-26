@@ -1,4 +1,5 @@
 import os
+import re
 
 from config import ROOT_DIR
 from src.decorators import log
@@ -17,7 +18,6 @@ def filter_by_state(operations_information: list[dict], state: str = "EXECUTED")
 @log(filename=os.path.join(ROOT_DIR, r"data/mylog.txt"))
 def sort_by_date(operations_information: list[dict], decrease: bool = True) -> list[dict]:
     """Сортировка списка данных о банковских операциях по дате"""
-
     operations_information = sorted(operations_information, key=lambda inform: inform["date"], reverse=decrease)
 
     for inf in operations_information:
@@ -25,3 +25,22 @@ def sort_by_date(operations_information: list[dict], decrease: bool = True) -> l
             inf["date"] = get_date(inf["date"])
 
     return operations_information
+
+
+# @log()
+@log(filename=os.path.join(ROOT_DIR, r"data/mylog.txt"))
+def filter_by_description(transactions: list[dict], target_string: str) -> list[dict]:
+    """Фильтрация списка данных о банковских операциях по заданному описанию"""
+    try:
+        pattern = re.compile(target_string, re.IGNORECASE)
+        target_transactions = list()
+
+        for item in transactions:
+            description = item.get("description")
+            if description and pattern.search(description):
+                target_transactions.append(item)
+
+        return target_transactions
+
+    except Exception as e:
+        raise Exception(f"Ошибка: {e}. Введены некорректные данные.")
