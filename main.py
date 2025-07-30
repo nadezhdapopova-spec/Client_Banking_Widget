@@ -5,7 +5,7 @@ from config import ROOT_DIR
 from src.counters import count_bank_operations
 from src.external_api import transact_conversion_to_rubles
 from src.generators import filter_by_currency, transaction_descriptions
-from src.logging_config import utils_logger
+from src.logging_config import setup_logger
 from src.processing import filter_by_description, filter_by_state, sort_by_date
 from src.reading_data_csv_excel import read_transactions_csv, read_transactions_excel
 from src.utils import deserialize_info, formate_json_data
@@ -22,6 +22,7 @@ MAX_CHOICE = 5
 
 def main() -> None:
     """Выводит главное меню программы."""
+
     print("Привет! Добро пожаловать в программу работы с банковскими транзакциями.\n")
 
     choice = 0
@@ -76,7 +77,7 @@ def get_inform_from_json() -> list[dict]:
     """Получает из JSON-файла данные о финансовых транзакциях."""
     filepath = os.path.join(ROOT_DIR, r"data/operations.json")
 
-    utils_logger.info(f"Получен путь до JSON-файла {filepath}.")
+    setup_logger().info(f"Получен путь до JSON-файла {filepath}.")
     transactions = deserialize_info(filepath)
     formated_transactions = formate_json_data(transactions)
 
@@ -87,6 +88,7 @@ def get_inform_from_csv() -> list[dict]:
     """Получает из CSV-файла данные о финансовых транзакциях."""
     filepath = os.path.join(ROOT_DIR, "data", "transactions.csv")
 
+    setup_logger().info(f"Получен путь до CSV-файла {filepath}.")
     transactions = read_transactions_csv(filepath)
 
     return transactions
@@ -96,6 +98,7 @@ def get_inform_from_xlsx() -> list[dict]:
     """Получает из XLSX-файла данные о финансовых транзакциях."""
     filepath = os.path.join(ROOT_DIR, "data", "transactions_excel.xlsx")
 
+    setup_logger().info(f"Получен путь до XLSX-файла {filepath}.")
     transactions = read_transactions_excel(filepath)
 
     return transactions
