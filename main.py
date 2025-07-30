@@ -45,11 +45,13 @@ def main() -> None:
             print("Всего доброго!")
             break
 
-        filtered_transactions = filtered_by_state(transactions)
-        target_transactions = filter_by_options(filtered_transactions)
-        masked_target_transactions = mask_transactions(target_transactions)
-
-        target_transactions_output(masked_target_transactions)
+        if transactions is []:
+            print("Ошибка доступа к данным. Попробуйте обратиться позже.")
+        else:
+            filtered_transactions = filtered_by_state(transactions)
+            target_transactions = filter_by_options(filtered_transactions)
+            masked_target_transactions = mask_transactions(target_transactions)
+            target_transactions_output(masked_target_transactions)
 
 
 def display_menu() -> None:
@@ -75,13 +77,18 @@ def get_menu_choice() -> int:
 
 def get_inform_from_json() -> list[dict]:
     """Получает из JSON-файла данные о финансовых транзакциях."""
-    filepath = os.path.join(ROOT_DIR, r"data/operations.json")
+    try:
+        filepath = os.path.join(ROOT_DIR, r"data/operations.json")
+        setup_logger().info(f"Получен путь до JSON-файла {filepath}.")
 
-    setup_logger().info(f"Получен путь до JSON-файла {filepath}.")
-    transactions = deserialize_info(filepath)
-    formated_transactions = formate_json_data(transactions)
-
-    return formated_transactions
+        transactions = deserialize_info(filepath)
+        formated_transactions = formate_json_data(transactions)
+    except FileNotFoundError:
+        return []
+    except ValueError:
+        return []
+    else:
+        return formated_transactions
 
 
 def get_inform_from_csv() -> list[dict]:
@@ -110,12 +117,7 @@ def convert_transact_to_rub() -> None:
         amount = float(input("Введите сумму транзакции (пример: 15811.0): "))
         currency = input("Введите код валюты (USD или EUR): ")
 
-        transaction = {
-            "amount": amount,
-            "currency_code": currency
-        }
-
-        print(f"{transact_conversion_to_rubles(transaction)} руб.\n")
+        print(f"{transact_conversion_to_rubles(amount, currency)} руб.\n")
 
     except ValueError:
         print("Введены некорректные данные\n")
@@ -225,7 +227,9 @@ def target_transactions_output(target_transactions: list[dict]) -> None:
             print(f"{key}: {value}")
 
         print()
+
         for transact in target_transactions:
+            transact["date"] = get_date(transact["date"])
             print(f"{transact["date"]} {transact["description"]}")
             print(f"{transact["from"]} -> {transact["to"]}")
             print(f"Сумма: {transact["amount"]} {transact["currency_code"]}")

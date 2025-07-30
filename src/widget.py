@@ -39,8 +39,8 @@ def get_date(date: str) -> str:
     """Функция для преобразования даты в формат 'ДД.ММ.ГГГГ'"""
     try:
         datetime_obj = datetime.fromisoformat(date)
-
         return datetime_obj.strftime("%d.%m.%Y")
-
     except ValueError:
-        raise ValueError("Некорректный формат даты.")
+        return date
+    except TypeError:
+        return date
