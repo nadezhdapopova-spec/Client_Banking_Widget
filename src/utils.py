@@ -17,7 +17,6 @@ def deserialize_info(filepath: str) -> list[dict]:
     setup_logger().info(f"Чтение JSON-файла {filepath}.")
     with open(filepath, encoding="utf-8") as f:
         data = json.load(f)
-
         if not isinstance(data, list):
             setup_logger().warning(f"Файл {filepath} не содержит список.")
             raise ValueError(f"Файл {filepath} не содержит список.")

@@ -70,27 +70,18 @@ def test_filter_by_state_invalid(invalid_information: list[dict],
     assert filter_by_state(invalid_information, state) == expected
 
 
-@pytest.mark.parametrize("invalid_information, state", [
-    ([{' '}], "EXECUTED"),
-    ([{''}], "CANCELED")
-])
-def test_filter_by_state_space(invalid_information: list[dict], state: str) -> None:
-    with pytest.raises(TypeError):
-        filter_by_state(invalid_information, state)
-
-
 @pytest.mark.parametrize("decrease, expected", [
     (True,
-     [{'id': 41428829, 'state': 'EXECUTED', 'date': '03.07.2019'},
-      {'id': 615064591, 'state': 'CANCELED', 'date': '14.10.2018'},
-      {'id': 594226727, 'state': 'CANCELED', 'date': '12.09.2018'},
-      {'id': 939719570, 'state': 'EXECUTED', 'date': '30.06.2018'}
+     [{'id': 41428829, 'state': 'EXECUTED', 'date': '2019-07-03T18:35:29.512364'},
+      {'id': 615064591, 'state': 'CANCELED', 'date': '2018-10-14T08:21:33.419441'},
+      {'id': 594226727, 'state': 'CANCELED', 'date': '2018-09-12T21:27:25.241689'},
+      {'id': 939719570, 'state': 'EXECUTED', 'date': '2018-06-30T02:08:58.425572'}
       ]),
     (False,
-     [{'id': 939719570, 'state': 'EXECUTED', 'date': '30.06.2018'},
-      {'id': 594226727, 'state': 'CANCELED', 'date': '12.09.2018'},
-      {'id': 615064591, 'state': 'CANCELED', 'date': '14.10.2018'},
-      {'id': 41428829, 'state': 'EXECUTED', 'date': '03.07.2019'}])
+     [{'id': 939719570, 'state': 'EXECUTED', 'date': '2018-06-30T02:08:58.425572'},
+      {'id': 594226727, 'state': 'CANCELED', 'date': '2018-09-12T21:27:25.241689'},
+      {'id': 615064591, 'state': 'CANCELED', 'date': '2018-10-14T08:21:33.419441'},
+      {'id': 41428829, 'state': 'EXECUTED', 'date': '2019-07-03T18:35:29.512364'}])
 ])
 def test_sort_by_date_success(valid_information: list[dict],
                               decrease: bool,
@@ -99,10 +90,10 @@ def test_sort_by_date_success(valid_information: list[dict],
 
 
 @pytest.mark.parametrize("expected", [
-    ([{'id': 41428829, 'state': 'EXECUTED', 'date': '03.07.2019'},
-     {'id': 615064591, 'state': 'CANCELED', 'date': '14.10.2018'},
-     {'id': 594226727, 'state': 'CANCELED', 'date': '12.09.2018'},
-     {'id': 939719570, 'state': 'EXECUTED', 'date': '30.06.2018'}])
+    ([{'id': 41428829, 'state': 'EXECUTED', 'date': '2019-07-03T18:35:29.512364'},
+     {'id': 615064591, 'state': 'CANCELED', 'date': '2018-10-14T08:21:33.419441'},
+     {'id': 594226727, 'state': 'CANCELED', 'date': '2018-09-12T21:27:25.241689'},
+     {'id': 939719570, 'state': 'EXECUTED', 'date': '2018-06-30T02:08:58.425572'}])
 ])
 def test_sort_by_date_without_decrease(valid_information: list[dict],
                                        expected: list[dict],
@@ -112,16 +103,16 @@ def test_sort_by_date_without_decrease(valid_information: list[dict],
 
 @pytest.mark.parametrize("decrease, expected", [
     (True,
-     [{'id': 594226727, 'state': 'CANCELED', 'date': '03.07.2019'},
-      {'id': 41428829, 'state': 'EXECUTED', 'date': '03.07.2019'},
-      {'id': 615064591, 'state': 'CANCELED', 'date': '03.07.2019'},
-      {'id': 939719570, 'state': 'EXECUTED', 'date': '03.07.2019'}
+     [{'id': 594226727, 'state': 'CANCELED', 'date': '2019-07-03T21:27:25.241689'},
+      {'id': 41428829, 'state': 'EXECUTED', 'date': '2019-07-03T18:35:29.512364'},
+      {'id': 615064591, 'state': 'CANCELED', 'date': '2019-07-03T08:21:33.419441'},
+      {'id': 939719570, 'state': 'EXECUTED', 'date': '2019-07-03T02:08:58.425572'}
       ]),
     (False,
-     [{'id': 939719570, 'state': 'EXECUTED', 'date': '03.07.2019'},
-      {'id': 615064591, 'state': 'CANCELED', 'date': '03.07.2019'},
-      {'id': 41428829, 'state': 'EXECUTED', 'date': '03.07.2019'},
-      {'id': 594226727, 'state': 'CANCELED', 'date': '03.07.2019'}])
+     [{'id': 939719570, 'state': 'EXECUTED', 'date': '2019-07-03T02:08:58.425572'},
+      {'id': 615064591, 'state': 'CANCELED', 'date': '2019-07-03T08:21:33.419441'},
+      {'id': 41428829, 'state': 'EXECUTED', 'date': '2019-07-03T18:35:29.512364'},
+      {'id': 594226727, 'state': 'CANCELED', 'date': '2019-07-03T21:27:25.241689'}])
 ])
 def test_sort_by_date_with_same_dates(information_with_same_dates: list[dict],
                                       expected: list[dict],

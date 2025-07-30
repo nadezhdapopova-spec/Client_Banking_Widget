@@ -41,6 +41,6 @@ def get_date(date: str) -> str:
         datetime_obj = datetime.fromisoformat(date)
         return datetime_obj.strftime("%d.%m.%Y")
     except ValueError:
-        return date
+        return "None"
     except TypeError:
-        return date
+        return "None"
