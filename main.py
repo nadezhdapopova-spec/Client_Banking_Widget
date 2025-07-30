@@ -115,7 +115,7 @@ def convert_transact_to_rub() -> None:
             "currency_code": currency
         }
 
-        print(f"{transact_conversion_to_rubles(transaction)} rub.\n")
+        print(f"{transact_conversion_to_rubles(transaction)} руб.\n")
 
     except ValueError:
         print("Введены некорректные данные\n")
