@@ -30,13 +30,7 @@ def transaction_descriptions(transactions: list[dict]) -> Iterator:
 @log(filename=os.path.join(ROOT_DIR, r"data/mylog.txt"))
 def card_number_generator(start: int, stop: int) -> Iterator:
     """Генерирует и возвращает номера банковских карт в заданном диапазоне номеров"""
-    if start <= 0 or start > 9999999999999999:
-        raise ValueError("Заданы невалидные значения.")
-
-    if stop > 9999999999999999:
-        raise ValueError("Заданы невалидные значения.")
-
-    if start > stop:
+    if start <= 0 or stop <= 0 or start > 9999999999999999 or stop > 9999999999999999 or stop < start:
         raise ValueError("Заданы невалидные значения.")
 
     card_numbers = (str(num).zfill(16) for num in range(start, stop + 1))
