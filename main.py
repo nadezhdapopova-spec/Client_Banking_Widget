@@ -156,9 +156,13 @@ def filter_by_options(filtered_transactions: list[dict]) -> list[dict]:
                 if isinstance(transact["date"], str):
                     transact["date"] = get_date(transact["date"])
 
-            except Exception:
+            except KeyError:
                 filtered_transactions.remove(transact)
                 continue
+            except ValueError:
+                filtered_transactions.remove(transact)
+                continue
+
 
     by_currency = input("Выводить только рублевые транзакции? Да/Нет: ")
     if by_currency.lower() == "да":
@@ -199,10 +203,13 @@ def mask_transactions(target_transactions: list[dict]) -> list[dict]:
 
     for transact in target_transactions:
         try:
-            transact["from"] = mask_account_card(transact["from"])
+            transact["from"] = mask_account_card(transact["from"]) if transact["from"] else "None"
             transact["to"] = mask_account_card(transact["to"])
 
-        except Exception:
+        except KeyError:
+            target_transactions.remove(transact)
+            continue
+        except ValueError:
             target_transactions.remove(transact)
             continue
 

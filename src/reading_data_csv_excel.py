@@ -16,9 +16,10 @@ def read_transactions_csv(filepath: str) -> list[dict]:
         raise ValueError(f"Файл {filepath} пустой.")
 
     setup_logger().info(f"Чтение CSV-файла {filepath}.")
-    transactions_reviews = pd.read_csv(filepath, delimiter=";")
+    transactions_reviews = pd.read_csv(filepath, delimiter=";", na_values=["", "NA", "NaN"])
     transactions_reviews.set_index(transactions_reviews.id, drop=False, inplace=True)
 
+    transactions_reviews = transactions_reviews.where(pd.notnull(transactions_reviews), None)
     trans_reviews_dict = transactions_reviews.to_dict(orient="records")
 
     setup_logger().info(f"CSV-файл {filepath} преобразован в Python-объект.")
@@ -36,9 +37,10 @@ def read_transactions_excel(filepath: str) -> list[dict]:
         raise ValueError(f"Файл {filepath} пустой.")
 
     setup_logger().info(f"Чтение XLSX-файла {filepath}.")
-    transactions_reviews = pd.read_excel(filepath)
+    transactions_reviews = pd.read_excel(filepath, na_values=["", "NA", "NaN"])
     transactions_reviews.set_index(transactions_reviews.id, drop=False, inplace=True)
 
+    transactions_reviews = transactions_reviews.where(pd.notnull(transactions_reviews), None)
     trans_reviews_dict = transactions_reviews.to_dict(orient="records")
 
     setup_logger().info(f"XLSX-файл {filepath} преобразован в Python-объект.")
