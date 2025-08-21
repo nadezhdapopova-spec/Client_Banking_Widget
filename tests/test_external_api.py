@@ -6,71 +6,45 @@ import pytest
 from src.external_api import transact_conversion_to_rubles
 
 
-def test_rub_conversion() -> None:
-    transact = {
-        "amount": 10000.5,
-        "currency_code": "RUB"
-    }
-
-    assert transact_conversion_to_rubles(transact) == 10000.5
-
-
-@patch("os.getenv", return_value="fake_api_key")
-@patch("requests.get")
+@patch("src.external_api.os.getenv", return_value="fake_api_key")
+@patch("src.external_api.requests.get")
 def test_usd_conversion(mock_get: Any, mock_getenv: Any) -> None:
     mock_response = Mock()
     mock_response.json.return_value = {"result": 7900.00}
+    mock_response.status_code = 200
     mock_get.return_value = mock_response
 
-    transact = {
-        "amount": 100,
-        "currency_code": "USD"
-    }
-
-    assert transact_conversion_to_rubles(transact) == 7900.00
+    assert transact_conversion_to_rubles(100, "USD") == 7900.00
     mock_get.assert_called_once()
     mock_getenv.assert_called_with("API_KEY")
 
 
-@patch("os.getenv", return_value="fake_api_key")
-@patch("requests.get")
+@patch("src.external_api.os.getenv", return_value="fake_api_key")
+@patch("src.external_api.requests.get")
 def test_eur_conversion(mock_get: Any, mock_getenv: Any) -> None:
     mock_response = Mock()
     mock_response.json.return_value = {"result": 9001.00}
+    mock_response.status_code = 200
     mock_get.return_value = mock_response
 
-    transact = {
-        "amount": 100,
-        "currency_code": "EUR"
-    }
-
-    assert transact_conversion_to_rubles(transact) == 9001.00
+    assert transact_conversion_to_rubles(100, "EUR") == 9001.00
     mock_get.assert_called_once()
     mock_getenv.assert_called_with("API_KEY")
 
 
 def test_conversion_invalid() -> None:
-    transact = {
-        "amount": 100,
-        "currency_code": "CNY"
-    }
-
     with pytest.raises(ValueError):
-        transact_conversion_to_rubles(transact)
+        transact_conversion_to_rubles(100, "CNY")
 
 
-def test_conversion_without_value() -> None:
-    transact = {
-        "amount": 100,
-        "currency_code": ""
-    }
+@patch("src.external_api.requests.get")
+def test_usd_conversion_error(mock_get: Any) -> None:
+    mock_response = Mock()
+    mock_response.json.return_value = {}
+    mock_response.status_code = 404
+    mock_get.return_value = mock_response
 
-    with pytest.raises(KeyError):
-        transact_conversion_to_rubles(transact)
+    with pytest.raises(Exception, match="Подключение не удалось"):
+        transact_conversion_to_rubles(100, "USD")
 
-
-def test_conversion_space() -> None:
-    transact: dict = {}
-
-    with pytest.raises(KeyError):
-        transact_conversion_to_rubles(transact)
+    mock_get.assert_called_once()

@@ -3,7 +3,6 @@ import re
 
 from config import ROOT_DIR
 from src.decorators import log
-from src.widget import get_date
 
 
 # @log()
@@ -11,7 +10,7 @@ from src.widget import get_date
 def filter_by_state(operations_information: list[dict], state: str = "EXECUTED") -> list[dict]:
     """Фильтрация списка данных о банковских операциях по статусу"""
 
-    return [inform for inform in operations_information if inform["state"] == state]
+    return [inform for inform in operations_information if inform.get("state") == state]
 
 
 # @log()
@@ -20,10 +19,6 @@ def sort_by_date(operations_information: list[dict], decrease: bool = True) -> l
     """Сортировка списка данных о банковских операциях по дате"""
     operations_information = sorted(operations_information, key=lambda inform: inform["date"], reverse=decrease)
 
-    for inf in operations_information:
-        if isinstance(inf["date"], str):
-            inf["date"] = get_date(inf["date"])
-
     return operations_information
 
 
@@ -31,16 +26,9 @@ def sort_by_date(operations_information: list[dict], decrease: bool = True) -> l
 @log(filename=os.path.join(ROOT_DIR, r"data/mylog.txt"))
 def filter_by_description(transactions: list[dict], target_string: str) -> list[dict]:
     """Фильтрация списка данных о банковских операциях по заданному описанию"""
-    try:
-        pattern = re.compile(target_string, re.IGNORECASE)
-        target_transactions = list()
+    pattern = re.compile(target_string, re.IGNORECASE)
+    target_transactions = [item for item in transactions
+                           if item.get("description") and pattern.search(item.get("description"))]
 
-        for item in transactions:
-            description = item.get("description")
-            if description and pattern.search(description):
-                target_transactions.append(item)
+    return target_transactions
 
-        return target_transactions
-
-    except Exception as e:
-        raise Exception(f"Ошибка: {e}. Введены некорректные данные.")

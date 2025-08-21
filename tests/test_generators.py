@@ -106,9 +106,8 @@ def test_card_number_generator_invalid_start_null() -> None:
 
 
 def test_card_number_generator_invalid_big_num() -> None:
-    generator = card_number_generator(12345678123456781, 12345678123456783)
     with pytest.raises(ValueError):
-        next(generator, "End")
+        list(card_number_generator(12345678123456781, 12345678123456783))
 
 
 def test_card_number_generator_invalid_big_stop() -> None:

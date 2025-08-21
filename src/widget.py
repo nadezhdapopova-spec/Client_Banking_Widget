@@ -13,6 +13,8 @@ def mask_account_card(card_or_account: str) -> str:
     Функция для получения маски номера банковского счёта в формате **XXXX
     или маски номера банковской карты в формате XXXX XX** **** XXXX
     """
+    card_or_account = str(card_or_account)
+
     if not card_or_account.replace(" ", "").isalnum():
         raise ValueError("Обнаружены некорректные символы.")
 
@@ -28,9 +30,9 @@ def mask_account_card(card_or_account: str) -> str:
             title += symbol
 
     if "Счет" in card_or_account:
-        return f"{title}{get_mask_account(int(number))}"
+        return f"{title}{get_mask_account(number)}"
     else:
-        return f"{title}{get_mask_card_number(int(number))}"
+        return f"{title}{get_mask_card_number(number)}"
 
 
 # @log()
@@ -39,8 +41,8 @@ def get_date(date: str) -> str:
     """Функция для преобразования даты в формат 'ДД.ММ.ГГГГ'"""
     try:
         datetime_obj = datetime.fromisoformat(date)
-
         return datetime_obj.strftime("%d.%m.%Y")
-
     except ValueError:
-        raise ValueError("Некорректный формат даты.")
+        return "None"
+    except TypeError:
+        return "None"

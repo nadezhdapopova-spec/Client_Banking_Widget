@@ -3,34 +3,34 @@ import os
 import requests
 from dotenv import load_dotenv
 
+load_dotenv()
 
-def transact_conversion_to_rubles(transact: dict) -> float:
+def transact_conversion_to_rubles(amount: int| float, currency: str) -> float:
     """Конвертирует валюту из USD и EUR в рубли и возвращает сумму транзакции в рублях."""
     valid_for_conversion = ["USD", "EUR"]
+    cur_to = "RUB"
+    cur_from = currency
+    url = "https://api.apilayer.com/exchangerates_data/convert"
 
-    if transact["currency_code"] in valid_for_conversion:
-        cur_to = "RUB"
-        cur_from = transact["currency_code"]
-        amount = transact["amount"]
-        url = f"https://api.apilayer.com/exchangerates_data/convert?to={cur_to}&from={cur_from}&amount={amount}"
+    if currency not in valid_for_conversion: raise ValueError("Некорректные данные")
 
-        load_dotenv()
-        api_key = os.getenv('API_KEY')
-        headers = {
-            "apikey": api_key
-        }
+    params = {
+        "to": cur_to,
+        "from": cur_from,
+        "amount": float(amount)
+    }
 
-        response = requests.get(url, headers=headers).json()
+    headers = {
+        "apikey": os.getenv('API_KEY')
+    }
 
-        result = round(response["result"], 2)
+    response = requests.get(url, headers=headers, params=params)
+    if response.status_code != 200: raise Exception("Подключение не удалось")
 
-    elif transact["currency_code"] == "RUB":
-        result = transact["amount"]
-
-    elif not transact["currency_code"]:
-        raise KeyError("Некорректные данные.")
-
+    try:
+        get_data = response.json()
+        result = round(get_data["result"], 2)
+    except Exception as err:
+        print(err)
     else:
-        raise ValueError("Некорректные данные.")
-
-    return float(result)
+        return float(result)
