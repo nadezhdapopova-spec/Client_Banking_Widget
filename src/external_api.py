@@ -10,7 +10,7 @@ def transact_conversion_to_rubles(amount: int| float, currency: str) -> float:
     valid_for_conversion = ["USD", "EUR"]
     cur_to = "RUB"
     cur_from = currency
-    url = f"https://api.apilayer.com/exchangerates_data/convert"
+    url = "https://api.apilayer.com/exchangerates_data/convert"
 
     if currency not in valid_for_conversion: raise ValueError("Некорректные данные")
 
