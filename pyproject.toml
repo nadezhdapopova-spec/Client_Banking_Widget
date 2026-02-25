@@ -1,8 +1,8 @@
 [project]
 name = "project-client-banking-widget"
 version = "0.1.0"
-description = """This is a widget project that shows the last few successful
-                 banking transactions of a client."""
+description = """A console application for processing banking transactions from various sources (JSON, CSV, XLSX)
+                 with the ability to filter, sort, mask data, and convert currencies"""
 authors = [
     {name = "Nadezhda Popova",email = "nadezhdapopova13@yandex.ru"}
 ]
