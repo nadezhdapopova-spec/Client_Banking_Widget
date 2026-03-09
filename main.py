@@ -8,7 +8,7 @@ from src.generators import filter_by_currency, transaction_descriptions
 from src.logging_config import setup_logger
 from src.processing import filter_by_description, filter_by_state, sort_by_date
 from src.reading_data_csv_excel import read_transactions_csv, read_transactions_excel
-from src.utils import deserialize_info, formate_json_data
+from src.utils import deserialize_info, format_json_data
 from src.widget import get_date, mask_account_card
 
 FROM_JSON = 1
@@ -82,7 +82,7 @@ def get_inform_from_json() -> list[dict]:
         setup_logger().info(f"Получен путь до JSON-файла {filepath}.")
 
         transactions = deserialize_info(filepath)
-        formated_transactions = formate_json_data(transactions)
+        formated_transactions = format_json_data(transactions)
     except FileNotFoundError:
         return []
     except ValueError:
@@ -148,31 +148,28 @@ def filter_by_options(filtered_transactions: list[dict]) -> list[dict]:
 
     by_date = input("Отсортировать операции по дате? Да/Нет: ")
     if by_date.lower() == "да":
-        filtered_transactions = sorting_by_date(filtered_transactions)
-
+        new_filtered_transactions = sorting_by_date(filtered_transactions)
     else:
+        new_filtered_transactions = []
         for transact in filtered_transactions:
-            try:
-                if isinstance(transact["date"], str):
-                    transact["date"] = get_date(transact["date"])
-
-            except KeyError:
-                filtered_transactions.remove(transact)
-                continue
-            except ValueError:
-                filtered_transactions.remove(transact)
-                continue
+            date_str = transact.get("date")
+            if isinstance(date_str, str):
+                parsed = get_date(date_str)
+                if parsed is None:
+                    continue
+                transact["date"] = parsed
+            new_filtered_transactions.append(transact)
 
 
     by_currency = input("Выводить только рублевые транзакции? Да/Нет: ")
     if by_currency.lower() == "да":
-        filtered_transactions = list(filter_by_currency(filtered_transactions, "руб."))
+        new_filtered_transactions = list(filter_by_currency(new_filtered_transactions, "руб."))
 
     by_description = input("Отфильтровать список транзакций по определенному слову в описании? Да/Нет: ")
     if by_description.lower() == "да":
-        filtered_transactions = filtration_by_description(filtered_transactions)
+        new_filtered_transactions = filtration_by_description(new_filtered_transactions)
 
-    return filtered_transactions
+    return new_filtered_transactions
 
 
 def sorting_by_date(filtered_transactions: list[dict]) -> Any:
@@ -190,11 +187,8 @@ def filtration_by_description(filtered_transactions: list[dict]) -> list[dict]:
     print("Возможные варианты описания:")
     descriptions = transaction_descriptions(filtered_transactions)
     print(*descriptions, sep="\n")
-
     target_description = input("Введите слово из описания: ")
-    filtered_transactions = filter_by_description(filtered_transactions, target_description)
-
-    return filtered_transactions
+    return filter_by_description(filtered_transactions, target_description)
 
 
 def mask_transactions(target_transactions: list[dict]) -> list[dict]:

@@ -4,7 +4,7 @@ from unittest.mock import mock_open, patch
 
 import pytest
 
-from src.utils import deserialize_info, formate_json_data
+from src.utils import deserialize_info, format_json_data
 
 
 @patch("src.utils.setup_logger", return_value=logging.getLogger("dummy"))
@@ -25,7 +25,7 @@ def test_deserialize_info_valid(mock_isfile: Any, mock_getsize: Any, mock_logger
 @patch("src.utils.os.path.isfile", return_value=True)
 def test_deserialize_info_empty_file(mock_getsize: Any, mock_isfile: Any) -> None:
     with pytest.raises(ValueError):
-        result = deserialize_info("fake_path_test.json")
+        deserialize_info("fake_path_test.json")
 
     mock_getsize.assert_called_once()
 
@@ -48,13 +48,13 @@ def test_file_not_found_on_open(mock_file: Any, mock_getsize: Any, mock_isfile: 
         deserialize_info("not_exist.json")
 
 
-def test_formate_json_data_success(transactions_from_json: list[dict],
+def test_format_json_data_success(transactions_from_json: list[dict],
                                    transactions_formated_from_json: list[dict]) -> None:
-    assert formate_json_data(transactions_from_json) == transactions_formated_from_json
+    assert format_json_data(transactions_from_json) == transactions_formated_from_json
 
 
-def test_formate_json_data_space() -> None:
-    assert formate_json_data([]) == []
+def test_format_json_data_space() -> None:
+    assert format_json_data([]) == []
 
 
 @pytest.mark.parametrize("transactions_list, expected", [
@@ -88,6 +88,6 @@ def test_formate_json_data_space() -> None:
             }
         ])
 ])
-def test_formate_json_data_invalid(transactions_list: list[dict],
+def test_format_json_data_invalid(transactions_list: list[dict],
                                    expected: list[dict]) -> None:
-    assert formate_json_data(transactions_list) == expected
+    assert format_json_data(transactions_list) == expected

@@ -37,12 +37,12 @@ def mask_account_card(card_or_account: str) -> str:
 
 # @log()
 @log(filename=os.path.join(ROOT_DIR, r"data/mylog.txt"))
-def get_date(date: str) -> str:
+def get_date(date: str) -> str | None:
     """Функция для преобразования даты в формат 'ДД.ММ.ГГГГ'"""
+    if isinstance(date, str) and len(date) == 10 and date[2] == "." and date[5] == ".":
+        return date
     try:
         datetime_obj = datetime.fromisoformat(date)
         return datetime_obj.strftime("%d.%m.%Y")
-    except ValueError:
-        return "None"
-    except TypeError:
-        return "None"
+    except (ValueError, TypeError):
+        return None

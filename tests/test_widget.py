@@ -94,4 +94,4 @@ def test_get_date_success(date: str, expected: str) -> None:
     ("2024/03/11T02:26:18.671407")
 ])
 def test_get_date_invalid(date: str) -> None:
-    assert get_date(date) == "None"
+    assert get_date(date) is None
