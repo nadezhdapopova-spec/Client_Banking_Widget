@@ -99,7 +99,7 @@ API_KEY=your_api_key_here
 
 ### Установка
 ```
-git clone https://github.com/nadezhdapopova-spec/Client_Banking_Widget
+git clone https://github.com/simbarilion/Client_Banking_Widget
 cd bank_transactions
 pip install -r requirements.txt
 ```
@@ -184,7 +184,7 @@ pytest tests/ -v
 
 ### Лицензия:
 
-Проект распространяется под [лицензией MIT](https://github.com/nadezhdapopova-spec/client-banking-widget/blob/main/LICENSE)
+Проект распространяется под [LICENSE](LICENSE)
 
 ### Автор
 
@@ -194,4 +194,4 @@ Python Developer
 
 📧 nadezhdapopova13@yandex.ru
 
-🔗 GitHub: nadezhdapopova-spec
+🔗 GitHub: simbarilion
