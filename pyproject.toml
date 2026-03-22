@@ -1,5 +1,6 @@
 [project]
 name = "project-client-banking-widget"
+package-mode = false
 version = "0.1.0"
 description = """A console application for processing banking transactions from various sources (JSON, CSV, XLSX)
                  with the ability to filter, sort, mask data, and convert currencies"""
